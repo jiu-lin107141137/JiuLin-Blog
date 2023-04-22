@@ -6,7 +6,7 @@ import router from './router'
 
 import Particles from 'vue3-particles'
 
-import './assets/main.css'
+import './assets/css/main.css'
 
 const app = createApp(App)
 
