@@ -3,7 +3,7 @@
 set -e
 
 git add .
-git commit -m "make home profile a seperate file."
+git commit -m "add onScrollListener to change nav's bg."
 
 # 將 dist資料夾中的內容推送至遠端 hexWeek6Demo的 gh-pages分支中
 git push -f https://github.com/jiu-lin107141137/JiuLin-Blog.git

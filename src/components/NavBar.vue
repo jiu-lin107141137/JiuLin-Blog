@@ -1,5 +1,46 @@
+<script setup>
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+let nav = null, vh = 0;
+
+window.onload = () => {
+  if(route.name != 'home')
+    return;
+  
+  nav = document.getElementById('nav');
+  vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+  if(window.scrollY >= vh){
+    nav.classList.add('bg-const');
+    console.log(1)
+  }
+  else if(nav.classList.contains('bg-const')){
+    nav.classList.remove('bg-const');
+    console.log(2)
+  }
+
+  const changeEvent = () => {
+    if(window.scrollY >= vh){
+      nav.classList.add('bg-const');
+      console.log(1)
+    }
+    else if(nav.classList.contains('bg-const')){
+      nav.classList.remove('bg-const');
+      console.log(2)
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    // var doit;
+    // clearTimeout(doit);
+    // doit = setTimeout(changeEvent, 300);
+    changeEvent();
+  });
+}
+</script>
+
 <template>
-  <div id="nav">
+  <div id="nav" class="">
     <div id="site-name">
       <span class="material-symbols-outlined"> texture </span>
       JiuLin's Blog
@@ -28,5 +69,9 @@
     font-size: 1.75rem;
     cursor: pointer;
   }
+}
+
+.bg-const {
+  background: var(--black-thin) !important;
 }
 </style>

@@ -250,7 +250,7 @@
 
       .tag {
         display: inline-flex;
-        border-radius: 5px;
+        border-radius: 3px;
         border: 1px solid var(--gray-500);
         cursor: pointer;
         overflow: hidden;
