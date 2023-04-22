@@ -11,7 +11,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: process.env.NODE_ENV == 'PRODUCTION'
-    ? 'JiuLin-Blog'
+  base: process.env.NODE_ENV == 'production'
+    ? '/JiuLin-Blog/'
     : '/',
 })
