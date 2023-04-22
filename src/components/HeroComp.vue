@@ -63,6 +63,7 @@
       h3 {
         color: var(--gray-400);
         opacity: 0.8;
+        font-size: 1.2rem;
       }
     }
   }

@@ -159,6 +159,7 @@ import { useI18n } from 'vue-i18n';
     margin-top: 1rem;
     padding: .5rem;
     color: var(--gray-400);
+    font-size: 1rem;
   }
 
   #articles-friends {

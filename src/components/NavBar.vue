@@ -58,7 +58,7 @@ window.onload = () => {
       JiuLin's Blog
     </div>
     <div id="functions">
-      <select id="lang-selector" v-model="currentLang">
+      <select id="lang-selector" class="form-control form-control-sm" v-model="currentLang">
         <option value="en">En-us</option>
         <option value="tw">Zh-tw</option>
       </select>
@@ -89,6 +89,22 @@ window.onload = () => {
   }
 
   #functions {
+
+    #lang-selector {
+      background: transparent;
+      color: var(--gray-100);
+
+      option,
+      option:hover,
+      option:checked {
+        position: absolute;
+        background: var(--black-thin) !important;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 99;
+      }
+    }
   }
 }
 
