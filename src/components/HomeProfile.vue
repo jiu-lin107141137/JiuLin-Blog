@@ -103,9 +103,9 @@
   min-width: 314px; // 250+64
   max-width: 414px;
   height: fit-content;
-  position: sticky;
-  top: calc(-1000px + 100vh);
-  left: 0;
+  // position: sticky;
+  // top: calc(-1000px + 100vh);
+  // left: 0;
   // background: var(--gray-900);
   background: var(--black-thin);
   border-radius: .5rem;
@@ -115,7 +115,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  // position: relative;
+  position: relative;
   @include smallerScreen {
     position: relative;
     top: 0;
