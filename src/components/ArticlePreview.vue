@@ -75,10 +75,12 @@
   .article_time {
     margin-top: 0.5rem;
     font-size: .9rem;
+    color: var(--gray-400);
   }
 
   .article_content {
     overflow: hidden;
+    color: var(--gray-400);
 
     .article_text_box {
       font-size: .8rem;
@@ -128,6 +130,7 @@
     flex-wrap: wrap;
     justify-content: left;
     gap: 1rem;
+    color: var(--gray-400);
 
     .article_tag {
       display: flex;

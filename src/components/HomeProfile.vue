@@ -148,6 +148,7 @@
     text-align: center;
     margin-top: 1rem;
     padding: .5rem;
+    color: var(--gray-400);
   }
 
   #articles-friends {
@@ -192,6 +193,7 @@
       display: flex;
       align-items: center;
       gap: .5rem; 
+      color: var(--gray-400);
 
       :first-child {
         font-size: 1.5rem;
