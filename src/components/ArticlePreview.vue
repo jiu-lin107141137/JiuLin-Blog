@@ -187,7 +187,7 @@
   padding: 1rem;
   cursor: pointer;
   color: var(--gray-100);
-  // background: var(--gray-900);
+  background: var(--gray-900);
   border-radius: 5px;
   border: 3px solid var(--gray-900);
   position: relative;
