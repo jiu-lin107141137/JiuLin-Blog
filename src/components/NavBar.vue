@@ -22,11 +22,9 @@ window.onload = () => {
   const changeEvent = () => {
     if(window.scrollY >= vh){
       nav.classList.add('bg-const');
-      console.log(1)
     }
     else if(nav.classList.contains('bg-const')){
       nav.classList.remove('bg-const');
-      console.log(2)
     }
   }
 
