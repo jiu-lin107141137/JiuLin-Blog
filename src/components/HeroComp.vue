@@ -1,3 +1,9 @@
+<script setup>
+// import { useI18n } from 'vue-i18n';
+
+
+</script>
+
 <template>
   <div id="hero-container">
     <div id="hero-box">
@@ -6,7 +12,7 @@
       </div>
       <div id="hero-text">
         <h1>JiuLin</h1>
-        <h3>Life is complex – it has both real and imaginary parts.</h3>
+        <h3>{{ $t('hero.quote') }}</h3>
       </div>
     </div>
   </div>

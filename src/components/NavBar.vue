@@ -1,5 +1,21 @@
 <script setup>
+import { useLangStore } from '../stores/lang';
+import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+const langStore = useLangStore();
+const { lang } = storeToRefs(langStore);
+
+const currentLang = computed({
+  get() {
+    return lang.value;
+  },
+  set(val) {
+    if (val != lang.value)
+      langStore.switchLang();
+  }
+})
 
 const route = useRoute();
 let nav = null, vh = 0;
@@ -41,6 +57,12 @@ window.onload = () => {
       <span class="material-symbols-outlined"> texture </span>
       JiuLin's Blog
     </div>
+    <div id="functions">
+      <select id="lang-selector" v-model="currentLang">
+        <option value="en">En-us</option>
+        <option value="tw">Zh-tw</option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -64,6 +86,9 @@ window.onload = () => {
   #site-name {
     font-size: 1.75rem;
     cursor: pointer;
+  }
+
+  #functions {
   }
 }
 

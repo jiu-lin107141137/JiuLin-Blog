@@ -1,17 +1,20 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-import App from './App.vue'
-import router from './router'
+import App from './App.vue';
+import router from './router';
 
-import Particles from 'vue3-particles'
+import i18n from './plugins/i18n';
 
-import './assets/css/main.css'
+import Particles from 'vue3-particles';
 
-const app = createApp(App)
+import './assets/css/main.css';
 
-app.use(createPinia())
-app.use(router)
-app.use(Particles)
+const app = createApp(App);
 
-app.mount('#app')
+app.use(createPinia());
+app.use(router);
+app.use(i18n);
+app.use(Particles);
+
+app.mount('#app');

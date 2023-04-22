@@ -1,0 +1,19 @@
+{
+  "hero" : {
+    "quote" : "Life is complex – it has both real and imaginary parts."
+  },
+  "home" : {
+    "profile" : {
+      "title" : {
+        "articles" : "articles",
+        "friends" : "friends",
+        "categories" : "categories",
+        "tags" : "tags"
+      },
+      "items" : {
+        "categories" : [],
+        "tags" : []
+      }
+    }
+  }
+}

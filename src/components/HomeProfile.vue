@@ -1,3 +1,7 @@
+<script setup>
+import { useI18n } from 'vue-i18n';
+</script>
+
 <template>
   <div id="profiles">
     <div id="avatar">
@@ -9,12 +13,12 @@
     </h4>
     <div id="articles-friends">
       <div>
-        <span>articles</span>
+        <span> {{ $t('home.profile.title.articles') }} </span>
         <span>12</span>
       </div>
       <div></div>
       <div>
-        <span>friends</span>
+        <span> {{ $t('home.profile.title.friends') }} </span>
         <span>3</span>
       </div>
     </div>
@@ -24,7 +28,7 @@
           topic
         </span>
         <span>
-          Categories
+          {{ $t('home.profile.title.categories') }} 
         </span>
       </div>
       <div class="statistics-body">
@@ -56,7 +60,7 @@
           sell
         </span>
         <span>
-          Tags
+          {{ $t('home.profile.title.tags') }} 
         </span>
       </div>
       <div id="tags-body" class="statistics-body">
@@ -200,6 +204,7 @@
       align-items: center;
       gap: .5rem; 
       color: var(--gray-400);
+      text-transform: capitalize;
 
       :first-child {
         font-size: 1.5rem;
