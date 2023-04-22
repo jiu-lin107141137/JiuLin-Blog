@@ -6,7 +6,7 @@
       </div>
       <div id="hero-text">
         <h1>JiuLin</h1>
-        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, tempore.</h3>
+        <h3>Life is complex – it has both real and imaginary parts.</h3>
       </div>
     </div>
   </div>
