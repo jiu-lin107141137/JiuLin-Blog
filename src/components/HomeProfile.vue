@@ -114,7 +114,7 @@
   position: relative;
   @include smallerScreen {
     width: 100% !important;
-    min-width: none !important;
+    min-width: 372px !important;
     max-width: none !important;
   }
 
@@ -281,9 +281,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  box-shadow: 0 0 2.5px 2.5px var(--purple-500);
+  box-shadow: 0 0 2.5px 2.5px var(--purple-700);
   opacity: 0;
-  transition: opacity .5s ease-in-out 0s;
+  transition: opacity .25s ease-in-out 0s;
 }
 
 #profiles:hover::before {

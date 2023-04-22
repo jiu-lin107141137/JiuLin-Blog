@@ -1,5 +1,6 @@
 <script setup>
 import HomeProfile from '@/components/HomeProfile.vue';
+import HomeArticlesContainer from '@/components/HomeArticlesContainer.vue';
 // import { ref } from 'vue'
 // const lastPos = ref(0);
 // const disable = ref(false);
@@ -41,9 +42,7 @@ import HomeProfile from '@/components/HomeProfile.vue';
 <template>
   <div id="main-body">
     <HomeProfile />
-    <div id="articles">
-
-    </div>
+    <HomeArticlesContainer />
   </div>
 </template>
 
@@ -70,18 +69,6 @@ import HomeProfile from '@/components/HomeProfile.vue';
     flex-wrap: wrap;
     padding: 2rem;
     gap: 0;
-
-    #articles {
-      width: 100% !important;
-      min-width: none !important;
-      max-width: none !important;
-    }
   };
-
-  #articles {
-    width: 75%;
-    height: 3rem;
-    // background: #0F0;
-  }
 }
 </style>
