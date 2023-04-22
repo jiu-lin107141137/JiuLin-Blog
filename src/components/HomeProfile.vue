@@ -102,6 +102,10 @@
   width: 25%;
   min-width: 314px; // 250+64
   max-width: 414px;
+  height: fit-content;
+  position: sticky;
+  top: calc(-1000px + 100vh);
+  left: 0;
   // background: var(--gray-900);
   background: var(--black-thin);
   border-radius: .5rem;
@@ -111,8 +115,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  position: relative;
+  // position: relative;
   @include smallerScreen {
+    position: relative;
+    top: 0;
     width: 100% !important;
     min-width: 372px !important;
     max-width: none !important;
@@ -216,7 +222,7 @@
         justify-content: space-between;
         align-items: center;
         position: relative;
-        transition: transform .5s ease-in-out 0s;
+        transition: transform .25s ease-in-out 0s;
         cursor: pointer;
         font-size: .8rem;
 

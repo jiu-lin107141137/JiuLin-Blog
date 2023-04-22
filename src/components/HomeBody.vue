@@ -64,6 +64,7 @@ import HomeArticlesContainer from '@/components/HomeArticlesContainer.vue';
   padding: 2rem 12.5rem;
   justify-content: center;
   gap: 1.5rem;
+  position: relative;
 
   @include smallerScreen {
     flex-wrap: wrap;

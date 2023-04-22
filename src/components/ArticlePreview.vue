@@ -28,6 +28,156 @@
       </div>
     </div>
   </div>
+  <div class="article">
+    <div class="article_title">
+      <span>Lorem ipsum dolor sit.</span>
+    </div>
+    <div class="article_time">
+      <small><i class="fas fa-clock"></i> 08/04/23 11:09:42</small>
+    </div>
+    <hr>
+    <div class="article_content">
+      <div class="article_text_box">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum delectus dolores fugit. Atque provident expedita maxime libero? Labore quidem consequatur similique, qui, id natus, aspernatur voluptatum nihil laborum itaque atque.
+      </div>
+    </div>
+    <hr>
+    <div class="article_tags">
+      <div class="article_tag">
+        <span class="material-symbols-outlined">
+          sell
+        </span>
+        <span>
+          Motion
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="article">
+    <div class="article_title">
+      <span>Lorem ipsum dolor sit.</span>
+    </div>
+    <div class="article_time">
+      <small><i class="fas fa-clock"></i> 08/04/23 11:09:42</small>
+    </div>
+    <hr>
+    <div class="article_content">
+      <div class="article_text_box">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum delectus dolores fugit. Atque provident expedita maxime libero? Labore quidem consequatur similique, qui, id natus, aspernatur voluptatum nihil laborum itaque atque.
+      </div>
+    </div>
+    <hr>
+    <div class="article_tags">
+      <div class="article_tag">
+        <span class="material-symbols-outlined">
+          sell
+        </span>
+        <span>
+          Motion
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="article">
+    <div class="article_title">
+      <span>Lorem ipsum dolor sit.</span>
+    </div>
+    <div class="article_time">
+      <small><i class="fas fa-clock"></i> 08/04/23 11:09:42</small>
+    </div>
+    <hr>
+    <div class="article_content">
+      <div class="article_text_box">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum delectus dolores fugit. Atque provident expedita maxime libero? Labore quidem consequatur similique, qui, id natus, aspernatur voluptatum nihil laborum itaque atque.
+      </div>
+    </div>
+    <hr>
+    <div class="article_tags">
+      <div class="article_tag">
+        <span class="material-symbols-outlined">
+          sell
+        </span>
+        <span>
+          Motion
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="article">
+    <div class="article_title">
+      <span>Lorem ipsum dolor sit.</span>
+    </div>
+    <div class="article_time">
+      <small><i class="fas fa-clock"></i> 08/04/23 11:09:42</small>
+    </div>
+    <hr>
+    <div class="article_content">
+      <div class="article_text_box">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum delectus dolores fugit. Atque provident expedita maxime libero? Labore quidem consequatur similique, qui, id natus, aspernatur voluptatum nihil laborum itaque atque.
+      </div>
+    </div>
+    <hr>
+    <div class="article_tags">
+      <div class="article_tag">
+        <span class="material-symbols-outlined">
+          sell
+        </span>
+        <span>
+          Motion
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="article">
+    <div class="article_title">
+      <span>Lorem ipsum dolor sit.</span>
+    </div>
+    <div class="article_time">
+      <small><i class="fas fa-clock"></i> 08/04/23 11:09:42</small>
+    </div>
+    <hr>
+    <div class="article_content">
+      <div class="article_text_box">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum delectus dolores fugit. Atque provident expedita maxime libero? Labore quidem consequatur similique, qui, id natus, aspernatur voluptatum nihil laborum itaque atque.
+      </div>
+    </div>
+    <hr>
+    <div class="article_tags">
+      <div class="article_tag">
+        <span class="material-symbols-outlined">
+          sell
+        </span>
+        <span>
+          Motion
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="article">
+    <div class="article_title">
+      <span>Lorem ipsum dolor sit.</span>
+    </div>
+    <div class="article_time">
+      <small><i class="fas fa-clock"></i> 08/04/23 11:09:42</small>
+    </div>
+    <hr>
+    <div class="article_content">
+      <div class="article_text_box">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum delectus dolores fugit. Atque provident expedita maxime libero? Labore quidem consequatur similique, qui, id natus, aspernatur voluptatum nihil laborum itaque atque.
+      </div>
+    </div>
+    <hr>
+    <div class="article_tags">
+      <div class="article_tag">
+        <span class="material-symbols-outlined">
+          sell
+        </span>
+        <span>
+          Motion
+        </span>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -44,6 +194,8 @@
 
   hr {
     margin: .5rem 0;
+    border: 1px solid var(--gray-700);
+    transition: border-color .25s ease-in-out 0s;
   }
 
   .article_title {
@@ -63,7 +215,7 @@
       content: '';
       position: absolute;
       width: 0;
-      height: 2px;
+      height: 1.5px;
       top: 100%;
       left: 50%;
       background: var(--purple-700);
@@ -175,6 +327,11 @@
 }
 
 .article:hover {
+
+  hr {
+    border-color: var(--purple-700);
+  }
+
   .article_title {
     color: var(--purple-700);
 
