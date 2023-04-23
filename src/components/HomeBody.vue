@@ -6,7 +6,7 @@ import { onMounted } from 'vue';
 const options = {
   root: null,
   rootMargin: '0px 0px 0px 0px',
-  threshold: 0.1
+  threshold: 0.05
 };
 
 onMounted(() => {
@@ -50,13 +50,16 @@ onMounted(() => {
 
 #main-body {
   width: 100%;
+  position: relative;
+  top: 100px;
   display: flex;
   padding: 2rem 12.5rem;
   justify-content: center;
   gap: 1.5rem;
   position: relative;
   opacity: 0;
-  transition: opacity .5s ease-in-out 0s;
+  transition: opacity .5s ease-in-out 0s,
+              top .5s ease-in-out 0s;
 
   @include smallerScreen {
     flex-wrap: wrap;
@@ -67,5 +70,6 @@ onMounted(() => {
 
 .fade-in {
   opacity: 1 !important;
+  top: 0 !important;
 }
 </style>
