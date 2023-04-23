@@ -204,12 +204,12 @@ window.onload = () => {
 
       ::before {
         transform: rotate(45deg);
-        top: 12.5%;
+        top: 50%;
       }
 
       ::after {
         transform: rotate(-45deg);
-        top: 12.5%;
+        top: 50%;
       }
     }
 
