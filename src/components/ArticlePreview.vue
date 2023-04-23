@@ -64,10 +64,8 @@ const getCategories = categoryId => {
       <span>{{ article.title }}</span>
     </div>
     <div class="article_time">
-      <small>
-        <i class="fas fa-clock"></i> 
-        {{ article.created_at }}
-      </small>
+      <i class="fas fa-clock"></i> 
+      {{ article.created_at }}
     </div>
     <div class="article_category">
       <span class="material-symbols-outlined">
@@ -141,13 +139,13 @@ const getCategories = categoryId => {
 
   .article_time {
     margin-top: 0.5rem;
-    font-size: .9rem;
+    font-size: .8rem;
     color: var(--gray-400);
 
-    small i {
-      margin: 0 .1rem;
+    i {
+      margin: 0 .1125rem;
       // margin-right: .1rem;
-      font-size: .9rem;
+      font-size: .85rem;
     }
   }
 
