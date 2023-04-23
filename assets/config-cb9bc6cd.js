@@ -1,0 +1,1 @@
+const t=[{title:"title1",summary:"summary",craeted_at:"23/04/23 11:16",tags:[1,2],category:0}],a={tags:["Java","Vue","Web","Android App"],categories:["Blog","Campus"]},e={articles:t,items:a};export{t as articles,e as default,a as items};
