@@ -9,10 +9,6 @@
         "friends" : "朋友",
         "categories" : "分類",
         "tags" : "標籤"
-      },
-      "items" : {
-        "categories" : [],
-        "tags" : []
       }
     }
   }

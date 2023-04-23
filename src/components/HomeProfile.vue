@@ -1,5 +1,73 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
+import { useLangStore } from '../stores/lang';
+import { storeToRefs } from 'pinia';
+import { computed, watch, ref } from 'vue';
+
+const langStore = useLangStore();
+const { lang } = storeToRefs(langStore);
+
+var blogConfig;
+const loadding = ref(true);
+
+const loadBlogConfig = async () => {
+  loadding.value = true;
+  if (lang.value == 'en')
+    blogConfig = await import('@/assets/blog/en/config.json');
+  else
+    blogConfig = await import('@/assets/blog/tw/config.json');
+  loadding.value = false;
+}
+
+loadBlogConfig();
+
+watch(lang, async ( newValue, oldValue ) => {
+  loadding.value = true;
+  if (newValue == 'en')
+    blogConfig = await import('@/assets/blog/en/config.json');
+  else
+    blogConfig = await import('@/assets/blog/tw/config.json');
+  loadding.value = false;
+});
+
+const getTags = computed(() => {
+  if(loadding.value || !blogConfig)
+    return [];
+
+  let tags = [];
+  blogConfig.items.tags.forEach(tagName => {
+    tags.push({
+      'tagName': tagName,
+      'tagCount': 0,
+    });
+  });
+
+  blogConfig.articles.forEach(article => {
+    article.tags.forEach(tagId => tags[tagId].tagCount++)
+  });
+
+  return tags;
+});
+
+const getCategories = computed(() => {
+  if(loadding.value || !blogConfig)
+    return [];
+
+  let categories = [];
+  blogConfig.items.categories.forEach(categoryName => {
+    categories.push({
+      'categoryName': categoryName,
+      'categoryCount': 0,
+    });
+  });
+
+  blogConfig.articles.forEach(article => categories[article.category].categoryCount++);
+
+  return categories;
+});
+
+const getArticlesCount = computed(() => loadding.value || !blogConfig ? 0 : blogConfig.articles.length);
+
 </script>
 
 <template>
@@ -14,7 +82,7 @@ import { useI18n } from 'vue-i18n';
     <div id="articles-friends">
       <div>
         <span> {{ $t('home.profile.title.articles') }} </span>
-        <span>12</span>
+        <span>{{ getArticlesCount }}</span>
       </div>
       <div></div>
       <div>
@@ -32,25 +100,9 @@ import { useI18n } from 'vue-i18n';
         </span>
       </div>
       <div class="statistics-body">
-        <div class="category">
-          <span>cat1</span>
-          <span>3</span>
-        </div>
-        <div class="category">
-          <span>cat2</span>
-          <span>3</span>
-        </div>
-        <div class="category">
-          <span>cat3</span>
-          <span>3</span>
-        </div>
-        <div class="category">
-          <span>cat4</span>
-          <span>3</span>
-        </div>
-        <div class="category">
-          <span>cat5</span>
-          <span>3</span>
+        <div class="category" v-for="category in getCategories" :key="category.categoryName">
+          <span>{{ category.categoryName }}</span>
+          <span>{{ category.categoryCount }}</span>
         </div>
       </div>
     </div>
@@ -64,25 +116,9 @@ import { useI18n } from 'vue-i18n';
         </span>
       </div>
       <div id="tags-body" class="statistics-body">
-        <div class="tag">
-          <span>tag1</span>
-          <span>10</span>
-        </div>
-        <div class="tag">
-          <span>tag2</span>
-          <span>7</span>
-        </div>
-        <div class="tag">
-          <span>tag3</span>
-          <span>15</span>
-        </div>
-        <div class="tag">
-          <span>tag4</span>
-          <span>8</span>
-        </div>
-        <div class="tag">
-          <span>tag5</span>
-          <span>3</span>
+        <div class="tag" v-for="tag in getTags" :key="tag.tagName">
+          <span>{{ tag.tagName }}</span>
+          <span>{{ tag.tagCount }}</span>
         </div>
       </div>
     </div>
@@ -247,10 +283,11 @@ import { useI18n } from 'vue-i18n';
         }
 
         span:last-child {
-          width: min-content;
+          width: 4ch;
           border-radius: 5px;
           background: var(--purple-300);
           padding: .2rem .5rem;
+          text-align: center;
         }
       }
 
