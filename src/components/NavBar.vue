@@ -91,23 +91,29 @@ window.onload = () => {
       <span class="material-symbols-outlined"> texture </span>
       JiuLin's Blog
     </div>
+    <input type="checkbox" id="menu-show" />
+    <label for="menu-show"><span></span></label>
     <div id="functions">
 
       <div class="data-dropdown">
         Categories
         <div class="data-dropdown-items">
-          <span v-for="(category, index) in getCategories" :key="category" :style="{ '--i' : index-1 }">
-            {{ category }}
-          </span>
+          <div v-for="(category, index) in getCategories" :key="category" :style="{ '--i' : index-1 }">
+            <span>
+              {{ category }}
+            </span>
+          </div>
         </div>
       </div>
 
       <div class="data-dropdown">
         Tags
         <div class="data-dropdown-items">
-          <span v-for="(tag, index) in getTags" :key="tag" :style="{ '--i' : index-1 }">
-            {{ tag }}
-          </span>
+          <div v-for="(tag, index) in getTags" :key="tag" :style="{ '--i' : index-1 }">
+            <span>
+              {{ tag }}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -120,11 +126,17 @@ window.onload = () => {
 </template>
 
 <style lang="scss" scoped>
+@mixin smallerScreen {
+  @media screen and (max-width: 972px) {
+    @content;
+  }
+}
+
 #nav {
   // width: 100vw;
   // width: 100svw;
   width: 100%;
-  height: 4rem;
+  min-height: 4rem;
   background: transparent;
   backdrop-filter: blur(10px);
   position: fixed;
@@ -135,10 +147,111 @@ window.onload = () => {
   padding: 0 2.5rem;
   box-shadow: 0 0 1rem 0 var(--black);
   z-index: 1;
+  @include smallerScreen {
+    flex-wrap: wrap;
+
+    #site-name, #functions {
+      width: 100%;
+    }
+
+    #site-name {
+      height: 4rem;
+      display: flex;
+      align-items: center;
+    }
+
+    label {
+      display: inline !important;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 2rem;
+      height: 2rem;
+
+      span {
+        display: block;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        position: relative;
+      }
+
+      ::before, ::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        left: 0;
+        background: var(--gray-100);
+        transition: transform .25s ease-out 0s,
+                    top .25s ease-in-out .25s;
+      }
+
+      ::before {
+        top: 25%;
+      }
+
+      ::after {
+        top: 75%;
+      }
+    }
+
+    #menu-show:checked ~ label {
+      ::before, ::after {
+        transition: transform .25s ease-in-out .25s,
+                    top .25s ease-in-out 0s;
+      }
+
+      ::before {
+        transform: rotate(45deg);
+        top: 12.5%;
+      }
+
+      ::after {
+        transform: rotate(-45deg);
+        top: 12.5%;
+      }
+    }
+
+    #menu-show:checked ~ #functions {
+      height: fit-content;
+      margin: .5rem;
+    }
+
+    #functions {
+      flex-wrap: wrap;
+      gap: 1rem !important;
+      padding: 0;
+      height: 0;
+      overflow: hidden;
+      display: none;
+
+      .data-dropdown, #lang-selector {
+        width: 100%;
+        height: 100%;
+        height: max-content;
+      }
+
+      .data-dropdown .data-dropdown-items {
+        position: static !important;
+        height: 0;
+        overflow: hidden;
+        transition: height 0.5s ease-in-out 0s;
+
+        div span {
+          left: 50%;
+        }
+      }
+    }
+  }
 
   #site-name {
     font-size: 1.75rem;
     cursor: pointer;
+  }
+
+  #menu-show, label {
+    display: none;
   }
 
   #functions {
@@ -155,9 +268,9 @@ window.onload = () => {
       .data-dropdown-items {
         position: absolute;
         top: 100%;
-        // left: -25%;
         display: flex;
-        flex-direction: column;
+        // flex-direction: column;
+        flex-wrap: wrap;
         border-radius: 5px;
         background: var(--black-thin);
         z-index: 1;
@@ -165,34 +278,42 @@ window.onload = () => {
         height: 0;
         overflow: hidden;
         
-        span {
-          position: relative;
-          margin: .5rem;
-          width: max-content;
-          opacity: 0;
-          left: 200%;
-          transition: color .25s ease-in-out 0s,
-                      left .25s ease-in-out calc(var(--i) * .1s),
-                      opacity .25s ease-in-out calc(var(--i) * .1s);
-        }
-
-        span::after {
-          content: '';
-          position: absolute;
-          width: 0;
-          height: 1px;
-          top: 90%;
-          left: 0;
-          background: var(--purple-700);
-          transition: width .25s ease-in-out 0s;
-        }
-
-        span:hover {
-          color: var(--purple-700);
-        }
-
-        span:hover::after {
+        div {
           width: 100%;
+          min-width: max-content;
+          padding: .25rem .5rem;
+
+          span {
+            position: relative;
+            margin: .5rem;
+            width: max-content;
+            opacity: 0;
+            left: 200%;
+            transition: color .25s ease-in-out 0s,
+                        left .25s ease-in-out calc(var(--i) * .1s),
+                        opacity .25s ease-in-out calc(var(--i) * .1s);
+          }
+
+          span::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            top: 90%;
+            left: 0;
+            background: var(--purple-700);
+            transition: width .25s ease-in-out 0s;
+          }
+        }
+
+        div:hover {
+          span {
+            color: var(--purple-700);
+          }
+
+          span::after {
+            width: 100%;
+          }
         }
       }
     }
