@@ -145,7 +145,9 @@ const getCategories = categoryId => {
     color: var(--gray-400);
 
     small i {
-      margin-right: .1rem;
+      margin: 0 .1rem;
+      // margin-right: .1rem;
+      font-size: .9rem;
     }
   }
 
