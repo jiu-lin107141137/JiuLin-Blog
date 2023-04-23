@@ -64,10 +64,14 @@ const getCategories = categoryId => {
       <span>{{ article.title }}</span>
     </div>
     <div class="article_time">
-      <i class="fas fa-clock"></i> 
+      <span class="material-symbols-outlined">
+        person
+      </span>
+      JiuLin
+      <span class="material-symbols-outlined">
+        schedule
+      </span>
       {{ article.created_at }}
-    </div>
-    <div class="article_category">
       <span class="material-symbols-outlined">
         topic
       </span>
@@ -141,24 +145,16 @@ const getCategories = categoryId => {
     margin-top: 0.5rem;
     font-size: .8rem;
     color: var(--gray-400);
-
-    i {
-      margin: 0 .1125rem;
-      // margin-right: .1rem;
-      font-size: .85rem;
-    }
-  }
-
-  .article_category {
-    margin-top: 0.5rem;
-    font-size: .8rem;
     display: flex;
     align-items: center;
-    gap: .2rem;
-    color: var(--gray-400);
+    gap: .25rem;
+
+    span:nth-child(n+2) {
+      margin-left: .5rem;
+    }
     
     span {
-      font-size: 1.1rem;
+      font-size: .9rem;
     }
   }
 
