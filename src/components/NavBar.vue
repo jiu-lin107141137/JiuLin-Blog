@@ -59,7 +59,7 @@ window.onload = () => {
     return;
   
   nav = document.getElementById('nav');
-  vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+  vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0) * .7;
   if(window.scrollY >= vh){
     nav.classList.add('bg-const');
   }

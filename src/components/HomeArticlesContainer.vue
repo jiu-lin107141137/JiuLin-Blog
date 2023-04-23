@@ -5,6 +5,10 @@ import ArticlePreview from '@/components/ArticlePreview.vue';
 <template>
   <div id="articles-conatiner">
     <ArticlePreview />
+    <ArticlePreview />
+    <ArticlePreview />
+    <ArticlePreview />
+    <ArticlePreview />
   </div>
 </template>
 
