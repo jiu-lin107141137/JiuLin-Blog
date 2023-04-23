@@ -96,7 +96,7 @@ window.onload = () => {
     <div id="functions">
 
       <div class="data-dropdown">
-        Categories
+        {{ $t('home.profile.title.categories') }}
         <div class="data-dropdown-items">
           <div v-for="(category, index) in getCategories" :key="category" :style="{ '--i' : index-1 }">
             <span>
@@ -107,7 +107,7 @@ window.onload = () => {
       </div>
 
       <div class="data-dropdown">
-        Tags
+        {{ $t('home.profile.title.tags') }}
         <div class="data-dropdown-items">
           <div v-for="(tag, index) in getTags" :key="tag" :style="{ '--i' : index-1 }">
             <span>
@@ -264,6 +264,8 @@ window.onload = () => {
       position: relative;
       transition: color .25s ease-in-out 0s;
       cursor: pointer;
+      word-break: keep-all;
+      text-transform: capitalize;
 
       .data-dropdown-items {
         position: absolute;

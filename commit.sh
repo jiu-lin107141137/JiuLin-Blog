@@ -3,7 +3,7 @@
 set -e
 
 git add .
-git commit -m "make navbar responsive."
+git commit -m "update navbar"
 
 # 將 dist資料夾中的內容推送至遠端 hexWeek6Demo的 gh-pages分支中
 git push -f https://github.com/jiu-lin107141137/JiuLin-Blog.git
