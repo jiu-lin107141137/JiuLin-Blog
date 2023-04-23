@@ -1,29 +1,94 @@
 <script setup>
+import { useLangStore } from '../stores/lang';
+import { storeToRefs } from 'pinia';
+import { ref, watch, computed } from 'vue';
+
+const props = defineProps({
+  article: {
+    type: Object,
+    default: {
+      "title" : "title",
+      "summary" : "summary",
+      "created_at" : "01/01/2023 00:00",
+      "tags" : [
+      ],
+      "category" : 0
+    },
+    required: true,
+  }
+})
+
+const langStore = useLangStore();
+const { lang } = storeToRefs(langStore);
+
+var blogConfig;
+const loadding = ref(true);
+
+const loadBlogConfig = async () => {
+  loadding.value = true;
+  if (lang.value == 'en')
+    blogConfig = await import('@/assets/blog/en/config.json');
+  else
+    blogConfig = await import('@/assets/blog/tw/config.json');
+  loadding.value = false;
+}
+
+loadBlogConfig();
+
+watch(lang, async ( newValue, oldValue ) => {
+  loadding.value = true;
+  if (newValue == 'en')
+    blogConfig = await import('@/assets/blog/en/config.json');
+  else
+    blogConfig = await import('@/assets/blog/tw/config.json');
+  loadding.value = false;
+});
+
+const getTags = tagId => {
+  if(loadding.value || !blogConfig)
+    return [];
+  return blogConfig.items.tags[tagId];
+};
+
+const getCategories = categoryId => {
+  if(loadding.value || !blogConfig)
+    return [];
+  return blogConfig.items.categories[categoryId];
+};
 
 </script>
 
 <template>
   <div class="article">
     <div class="article_title">
-      <span>Lorem ipsum dolor sit.</span>
+      <span>{{ article.title }}</span>
     </div>
     <div class="article_time">
-      <small><i class="fas fa-clock"></i> 08/04/23 11:09:42</small>
+      <small>
+        <i class="fas fa-clock"></i> 
+        {{ article.created_at }}
+      </small>
+    </div>
+    <div class="article_category">
+      <span class="material-symbols-outlined">
+        topic
+      </span>
+      {{ getCategories(article.category) }}
     </div>
     <hr>
     <div class="article_content">
       <div class="article_text_box">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum delectus dolores fugit. Atque provident expedita maxime libero? Labore quidem consequatur similique, qui, id natus, aspernatur voluptatum nihil laborum itaque atque.
+        {{ article.summary }}
       </div>
     </div>
     <hr>
     <div class="article_tags">
-      <div class="article_tag">
+      <div class="article_tag" v-for="tagId in article.tags" :key="tagId">
         <span class="material-symbols-outlined">
           sell
         </span>
         <span>
-          Motion
+          {{ getTags(tagId) }}
         </span>
       </div>
     </div>
@@ -78,6 +143,23 @@
     margin-top: 0.5rem;
     font-size: .9rem;
     color: var(--gray-400);
+
+    small i {
+      margin-right: .1rem;
+    }
+  }
+
+  .article_category {
+    margin-top: 0.5rem;
+    font-size: .8rem;
+    display: flex;
+    align-items: center;
+    gap: .2rem;
+    color: var(--gray-400);
+    
+    span {
+      font-size: 1.1rem;
+    }
   }
 
   .article_content {
@@ -140,6 +222,7 @@
       border-radius: 3px;
       border: 1px solid var(--gray-500);
       overflow: hidden;
+      align-items: center;
 
       span {
         padding: .2rem .3rem;
@@ -150,7 +233,8 @@
       span:nth-child(1) {
         background: var(--gray-900);
         color: var(--gray-100);
-        font-size: 1.25rem;
+        font-size: 1rem;
+        border-right: 1px solid var(--gray-700);
       }
     }
 
