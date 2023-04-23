@@ -228,11 +228,11 @@ const getCategories = categoryId => {
         padding: .2rem .3rem;
         font-size: .8rem;
         transition: color .25s ease-in-out 0s;
+        color: var(--gray-300);
       }
 
       span:nth-child(1) {
         background: var(--gray-900);
-        color: var(--gray-100);
         font-size: 1rem;
         border-right: 1px solid var(--gray-700);
       }
