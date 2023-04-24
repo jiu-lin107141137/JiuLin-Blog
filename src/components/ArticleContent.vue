@@ -74,7 +74,7 @@ const getMdFile = async () => {
   translateMd(res_content)
     .then(res => {
       articleContent.value = res;
-      console.log(res);
+      // console.log(res);
     })
 }
 
