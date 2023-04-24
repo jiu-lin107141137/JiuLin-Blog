@@ -16,6 +16,7 @@
   background: var(--black-thin);
   color: var(--gray-300);
   position: relative;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;

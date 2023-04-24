@@ -56,10 +56,13 @@ const route = useRoute();
 let nav = null, vh = 0;
 
 window.onload = () => {
-  if(route.name != 'home')
-    return;
-  
   nav = document.getElementById('nav');
+
+  if(route.name != 'home'){
+    nav.classList.add('bg-const');
+    return;
+  }
+  
   vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0) * .7;
   if(window.scrollY >= vh){
     nav.classList.add('bg-const');
@@ -152,6 +155,8 @@ window.onload = () => {
   z-index: 1;
   @include smallerScreen {
     flex-wrap: wrap;
+    padding: 0 2.5rem 0 1rem;
+    // transition: max-height;
 
     #site-name, #functions {
       width: 100%;
