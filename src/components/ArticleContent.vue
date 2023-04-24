@@ -5,9 +5,13 @@ import { storeToRefs } from 'pinia';
 import { ref, watch, computed, onMounted } from 'vue';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
+// import 'highlightjs-line-numbers.js';
 import axios from 'axios';
 import 'github-markdown-css/github-markdown-light.css';
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/github-dark.css';
+
+window.hljs = hljs;
+import('highlightjs-line-numbers.js');
 
 const route = useRoute();
 const langStore = useLangStore();
@@ -44,6 +48,11 @@ watch(lang, async(newV, oldV) => {
 //     level: level
 //   });
 // }
+// myMarkdownRenderer.codespan = (code) => {
+
+// }
+
+window.hljs.highlightAll();
 
 marked.setOptions({
   // breaks: true,
@@ -51,8 +60,8 @@ marked.setOptions({
   headerIds: true,
   headerPrefix: 'markdown-heading-',
   highlight: (code, lang) => {
-    const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-    return hljs.highlight(code, { language: language }).value;
+    const language = window.hljs.getLanguage(lang) ? lang : 'plaintext';
+    return window.hljs.highlight(code, { language: language }).value;
   },
   langPrefix: 'hljs language-',
   renderer: myMarkdownRenderer,
@@ -76,11 +85,11 @@ const getMdFile = async () => {
   }).catch(e => {
     console.log(e);
   });
-  console.log(res_content);
+  // console.log(res_content);
   translateMd(res_content)
     .then(res => {
       articleContent.value = res;
-      console.log(res);
+      // console.log(res);
     })
 }
 
@@ -154,6 +163,7 @@ onMounted(async() => {
 
     div {
       width: 100%;
+      color: var(--gray-300);
     }
 
     #article-title {
@@ -172,7 +182,6 @@ onMounted(async() => {
       padding-left: 1rem;
       height: fit-content;
       display: flex;
-      color: var(--gray-300);
 
       .pair {
       background: var(--black-thin);
@@ -193,26 +202,49 @@ onMounted(async() => {
       border-radius: .375rem;
       border: 1px solid var(--gray-900);
       background: var(--black-thin);
-      // background: #FFF;
-      color: var(--gray-300);
-      // color:;
       padding: .5rem 1rem;
       line-height: 2rem;
 
-      .markdown-body {
-        box-sizing: border-box;
-        min-width: 200px;
-        max-width: 980px;
-        margin: 0 auto;
-        padding: 45px;
-      }
-
+      /*
       @media (max-width: 767px) {
         .markdown-body {
           padding: 15px;
         }
+      }*/
+      
+      :deep(pre:has(code.hljs)) {
+        background-color: var(--gray-900);
       }
 
+      :deep(.hljs-ln-numbers) {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        text-align: center;
+        color: #ccc;
+        border-right: 1px solid #CCC;
+        vertical-align: top;
+        padding-right: 5px;
+
+        /* your custom style here */
+      }
+
+      /* for block of code */
+      :deep(.hljs-ln-code) {
+        padding-left: 10px;
+      }
+    }
+
+    .markdown-body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 45px;
     }
   }
 }
