@@ -1,7 +1,6 @@
 
 # Arduino 電路實驗 藍芽電子琴-Remote player
 
----
 ###### tag：`Arduino` `bluetooth` `buzzer`
 ---
 
