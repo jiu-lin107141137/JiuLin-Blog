@@ -5,13 +5,9 @@ import { storeToRefs } from 'pinia';
 import { ref, watch, computed, onMounted } from 'vue';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
-// import 'highlightjs-line-numbers.js';
 import axios from 'axios';
 import 'github-markdown-css/github-markdown-light.css';
 import 'highlight.js/styles/github-dark.css';
-
-window.hljs = hljs;
-import('highlightjs-line-numbers.js');
 
 const route = useRoute();
 const langStore = useLangStore();
@@ -41,18 +37,7 @@ watch(lang, async(newV, oldV) => {
   loading.value = false;
 });
 
-// set up renderer
-// myMarkdownRenderer.heading = (text, level) => {
-//   heading.push({
-//     text: text,
-//     level: level
-//   });
-// }
-// myMarkdownRenderer.codespan = (code) => {
-
-// }
-
-window.hljs.highlightAll();
+hljs.highlightAll();
 
 marked.setOptions({
   // breaks: true,
@@ -60,8 +45,8 @@ marked.setOptions({
   headerIds: true,
   headerPrefix: 'markdown-heading-',
   highlight: (code, lang) => {
-    const language = window.hljs.getLanguage(lang) ? lang : 'plaintext';
-    return window.hljs.highlight(code, { language: language }).value;
+    const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+    return hljs.highlight(code, { language: language }).value;
   },
   langPrefix: 'hljs language-',
   renderer: myMarkdownRenderer,
@@ -89,7 +74,7 @@ const getMdFile = async () => {
   translateMd(res_content)
     .then(res => {
       articleContent.value = res;
-      // console.log(res);
+      console.log(res);
     })
 }
 
