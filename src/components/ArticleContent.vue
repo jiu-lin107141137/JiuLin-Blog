@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router';
 import { useLangStore } from '../stores/lang';
 import { storeToRefs } from 'pinia';
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 import axios from 'axios';
 
 const route = useRoute();
@@ -50,6 +50,14 @@ const getMdFile = async () => {
   console.log(res_content);
 }
 
-getMdFile()
+onMounted(async() => {
+  await getMdFile();
+})
 
 </script>
+
+<template>
+  <div>
+    
+  </div>
+</template>
