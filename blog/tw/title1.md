@@ -1,7 +1,3 @@
----
-###### tag：`Arduino` `bluetooth` `buzzer`
----
-
 
 # Arduino 電路實驗 藍芽電子琴-Remote player
 * 系級：...
