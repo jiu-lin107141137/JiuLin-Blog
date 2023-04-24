@@ -45,7 +45,7 @@ Now suppose that there are 2 nodes, Alice and Bob, want to make there own secret
 7. Alice and Bob announce and compare the values of the n check bits. If more than an acceptable number disagree, they abort the protocol.
     1. Bob receives the indices, sends corresponding bits from measurements to Alice
     2. Alice receives the bits from Bob, compared them with corresponding checking bits of Alice, and records the QBER.
-    3. Based on the QBER, Alice tells Bob if the QKD is successful or not.<br>
+    3. Based on the QBER, Alice tells Bob if the QKD is successful or not.
        => if successful, now Alice and Bob have the same key(the bits where the indices weren't picked to compare)  
        => if fail, redo the protocol
 8. Alice and Bob perform information reconciliation and privacy amplification on the remaining n bits to obtain m shared key bits.
