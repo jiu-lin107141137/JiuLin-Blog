@@ -210,7 +210,7 @@ watch(() => route.name, () => {
         left: 0;
         background: var(--gray-100);
         transition: transform .25s ease-out 0s,
-                    top .25s ease-in-out .25s;
+                    top .25s ease-in-out .125s;
       }
 
       ::before {
@@ -224,7 +224,7 @@ watch(() => route.name, () => {
 
     #menu-show:checked ~ label {
       ::before, ::after {
-        transition: transform .25s ease-in-out .25s,
+        transition: transform .25s ease-in-out .125s,
                     top .25s ease-in-out 0s;
       }
 
