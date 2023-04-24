@@ -255,10 +255,15 @@ window.onload = () => {
 
   #site-name {
     font-size: 1.75rem;
+    transition: color .25s ease-in-out 0s;
 
     div {
       cursor: pointer;
     }
+  }
+
+  #site-name:hover {
+    color: var(--purple-700);
   }
 
   #menu-show, label {
