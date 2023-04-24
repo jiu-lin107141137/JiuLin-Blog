@@ -40,8 +40,8 @@ watch(lang, async(newV, oldV) => {
 hljs.highlightAll();
 
 marked.setOptions({
-  // breaks: true,
-  // gfm: true,
+  breaks: true,
+  gfm: true,
   headerIds: true,
   headerPrefix: 'markdown-heading-',
   highlight: (code, lang) => {
@@ -70,7 +70,6 @@ const getMdFile = async () => {
   }).catch(e => {
     console.log(e);
   });
-  // console.log(res_content);
   translateMd(res_content)
     .then(res => {
       articleContent.value = res;
@@ -196,9 +195,20 @@ onMounted(async() => {
           padding: 15px;
         }
       }*/
+
+      :deep(h1),
+      :deep(h2),
+      :deep(h3) {
+        color: var(--purple-700) !important;
+      }
       
-      :deep(pre:has(code.hljs)) {
+      :deep(pre:has(code.hljs)),
+      :deep(tr) {
         background-color: var(--gray-900);
+      }
+
+      :deep(tr):nth-child(2n) {
+        background-color: var(--gray-800);
       }
 
       :deep(.hljs-ln-numbers) {

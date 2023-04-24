@@ -12,7 +12,6 @@ const options = {
 onMounted(() => {
   const tar = document.querySelector('#main-body');
 
-  //設定call back
   const callback = (entries, observer) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -24,7 +23,6 @@ onMounted(() => {
 
   let observer = new IntersectionObserver(callback, options);
 
-  // tar.forEach(e => observer.observe(e));
   observer.observe(tar);
 });
 </script>
