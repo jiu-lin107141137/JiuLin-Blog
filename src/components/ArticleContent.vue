@@ -3,13 +3,19 @@ import { useRoute } from 'vue-router';
 import { useLangStore } from '../stores/lang';
 import { storeToRefs } from 'pinia';
 import { ref, watch, computed, onMounted } from 'vue';
+import { marked } from 'marked';
+import hljs from 'highlight.js';
 import axios from 'axios';
+import 'github-markdown-css/github-markdown-light.css';
+import 'highlight.js/styles/github.css';
 
 const route = useRoute();
 const langStore = useLangStore();
 const { lang } = storeToRefs(langStore);
 var blogConfig, articleContent = ref('');
 const loading = ref(true);
+var myMarkdownRenderer = new marked.Renderer();
+var heading = [];
 
 (async () => {
   loading.value = true;
@@ -29,7 +35,33 @@ watch(lang, async(newV, oldV) => {
     blogConfig = import('../assets/blog/tw/config.json');
   await getMdFile();
   loading.value = false;
+});
+
+// set up renderer
+// myMarkdownRenderer.heading = (text, level) => {
+//   heading.push({
+//     text: text,
+//     level: level
+//   });
+// }
+
+marked.setOptions({
+  // breaks: true,
+  // gfm: true,
+  headerIds: true,
+  headerPrefix: 'markdown-heading-',
+  highlight: (code, lang) => {
+    const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+    return hljs.highlight(code, { language: language }).value;
+  },
+  langPrefix: 'hljs language-',
+  renderer: myMarkdownRenderer,
 })
+
+const translateMd = async (markdownStr) => {
+  heading = {};
+  return marked.parse(markdownStr)
+};
 
 const getMdFile = async () => {
   let path = '/blog/' + lang.value + '/' + route.params.name + '.md';
@@ -45,11 +77,16 @@ const getMdFile = async () => {
     console.log(e);
   });
   console.log(res_content);
+  translateMd(res_content)
+    .then(res => {
+      articleContent.value = res;
+      console.log(res);
+    })
 }
 
 onMounted(async() => {
   loading.value = true;
-  // await getMdFile();
+  await getMdFile();
   loading.value = false;
 })
 
@@ -87,8 +124,7 @@ onMounted(async() => {
           Vue, Web
         </div>
       </div>
-      <div id="article-content">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis, aut voluptatibus. Facilis ipsa vero perspiciatis dicta, iusto, maxime eligendi dolorem inventore consequatur laborum laudantium sit! Sit optio blanditiis error et.
+      <div id="article-content" class="markdown-body" v-html="articleContent">
       </div>
     </div>
   </div>
@@ -111,7 +147,7 @@ onMounted(async() => {
     grid-template-columns: 1fr;
     row-gap: 1.25rem;
     // background: var(--gray-900);
-    color: var(--gray-100);
+    // color: var(--gray-100);
     text-align: left;
     margin: 2rem 0;
     padding: .5rem 1rem;
@@ -137,9 +173,9 @@ onMounted(async() => {
       height: fit-content;
       display: flex;
       color: var(--gray-300);
-      background: var(--black-thin);
 
       .pair {
+      background: var(--black-thin);
         margin-right: 1rem;
         display: flex;
         gap: .5rem;
@@ -153,13 +189,30 @@ onMounted(async() => {
     }
 
     #article-content {
-      height: 10rem;
+      // height: 10rem;
       border-radius: .375rem;
       border: 1px solid var(--gray-900);
       background: var(--black-thin);
+      // background: #FFF;
       color: var(--gray-300);
+      // color:;
       padding: .5rem 1rem;
       line-height: 2rem;
+
+      .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+      }
+
+      @media (max-width: 767px) {
+        .markdown-body {
+          padding: 15px;
+        }
+      }
+
     }
   }
 }
