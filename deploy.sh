@@ -4,6 +4,9 @@ set -e
 # 建立輸出檔案
 npm run build
 
+# copy 404 page to paste it in dist.
+copy 404.html dist
+
 # 移動至到打包後的dist目錄 
 cd dist
 

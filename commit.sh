@@ -3,7 +3,7 @@
 set -e
 
 git add .
-git commit -m "redirect to homepage when click on sitename (navbar)"
+git commit -m "add 404 html to prevent refresh 404 error"
 
 # 將 dist資料夾中的內容推送至遠端 hexWeek6Demo的 gh-pages分支中
 git push -f https://github.com/jiu-lin107141137/JiuLin-Blog.git
