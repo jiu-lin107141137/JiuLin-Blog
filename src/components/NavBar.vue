@@ -1,9 +1,10 @@
 <script setup>
 import { useLangStore } from '../stores/lang';
 import { storeToRefs } from 'pinia';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { computed, watch, ref } from 'vue';
 
+const router = useRouter();
 const langStore = useLangStore();
 const { lang } = storeToRefs(langStore);
 
@@ -86,10 +87,12 @@ window.onload = () => {
 </script>
 
 <template>
-  <div id="nav" class="">
+  <div id="nav">
     <div id="site-name">
-      <span class="material-symbols-outlined"> texture </span>
-      JiuLin's Blog
+      <div @click="router.push('/')">
+        <span class="material-symbols-outlined"> texture </span>
+        JiuLin's Blog
+      </div>
     </div>
     <input type="checkbox" id="menu-show" />
     <label for="menu-show"><span></span></label>
@@ -247,7 +250,10 @@ window.onload = () => {
 
   #site-name {
     font-size: 1.75rem;
-    cursor: pointer;
+
+    div {
+      cursor: pointer;
+    }
   }
 
   #menu-show, label {
