@@ -2,7 +2,7 @@
 import { useLangStore } from '../stores/lang';
 import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
-import { computed, watch, ref } from 'vue';
+import { computed, watch, ref, onMounted, onUnmounted } from 'vue';
 
 const router = useRouter();
 const langStore = useLangStore();
@@ -55,7 +55,16 @@ const getCategories = computed(() => {
 const route = useRoute();
 let nav = null, vh = 0;
 
-window.onload = () => {
+const changeEvent = () => {
+  if(window.scrollY >= vh){
+    nav.classList.add('bg-const');
+  }
+  else if(nav.classList.contains('bg-const')){
+    nav.classList.remove('bg-const');
+  }
+}
+
+onMounted(() => {
   nav = document.getElementById('nav');
 
   if(route.name != 'home'){
@@ -71,22 +80,31 @@ window.onload = () => {
     nav.classList.remove('bg-const');
   }
 
-  const changeEvent = () => {
+  window.addEventListener('scroll', changeEvent);
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', changeEvent)
+})
+
+watch(() => route.name, () => {
+  if(route.name != 'home'){
+    window.removeEventListener('scroll', changeEvent)
+    nav.classList.add('bg-const');
+    return;
+  }
+  else {  
+    vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0) * .7;
     if(window.scrollY >= vh){
       nav.classList.add('bg-const');
     }
     else if(nav.classList.contains('bg-const')){
       nav.classList.remove('bg-const');
     }
+    window.addEventListener('scroll', changeEvent);
   }
+})
 
-  window.addEventListener('scroll', () => {
-    // var doit;
-    // clearTimeout(doit);
-    // doit = setTimeout(changeEvent, 300);
-    changeEvent();
-  });
-}
 </script>
 
 <template>
