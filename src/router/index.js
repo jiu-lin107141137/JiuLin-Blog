@@ -15,7 +15,11 @@ const router = createRouter({
       path: '/article/:name',
       name: 'article',
       component: ArticleView
-    }
+    },
+    // { 
+    //   path: "*", 
+    //   redirect: '/'
+    // }
   ]
 })
 

@@ -3,7 +3,7 @@
 set -e
 
 git add .
-git commit -m "add 404 html to prevent refresh 404 error"
+git commit -m "try to solve 404 error when reload the page"
 
 # 將 dist資料夾中的內容推送至遠端 hexWeek6Demo的 gh-pages分支中
 git push -f https://github.com/jiu-lin107141137/JiuLin-Blog.git
