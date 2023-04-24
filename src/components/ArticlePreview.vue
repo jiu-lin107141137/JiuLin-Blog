@@ -2,6 +2,9 @@
 import { useLangStore } from '../stores/lang';
 import { storeToRefs } from 'pinia';
 import { ref, watch, computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const props = defineProps({
   article: {
@@ -59,7 +62,7 @@ const getCategories = categoryId => {
 </script>
 
 <template>
-  <div class="article">
+  <div class="article" @click.prevent="router.push('/article/'+article.url)">
     <div class="article_title">
       <span>{{ article.title }}</span>
     </div>
