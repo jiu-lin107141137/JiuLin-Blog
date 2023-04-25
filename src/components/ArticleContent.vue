@@ -138,7 +138,6 @@ onUnmounted(() => {
 })
 
 const clickOnLink = async (id) => {
-  console.log('123');
   document.removeEventListener('scroll', scrollEvent);
   if(previousActive){
     if(previousActive.id == 'to-'+id)
