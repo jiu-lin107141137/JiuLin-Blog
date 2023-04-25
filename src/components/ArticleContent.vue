@@ -145,7 +145,7 @@ const clickOnLink = async (id) => {
     previousActive.classList.remove('current');
   }
   window.scrollTo({
-    top: document.getElementById(id).getBoundingClientRect().top + window.scrollY - 64,
+    top: document.getElementById(id).getBoundingClientRect().top + window.scrollY - 80,
     behavior: 'smooth'
   })
   previousActive = document.getElementById('to-'+id);
@@ -153,7 +153,7 @@ const clickOnLink = async (id) => {
   var urlHash = '#'+id;
   await router.push(urlHash).then(() => {
     window.history.replaceState({ ...window.history.state, ...null}, '');
-    setTimeout(() => document.addEventListener('scroll', scrollEvent), 1000);
+    setTimeout(() => document.addEventListener('scroll', scrollEvent), 2000);
   });
 }
 
@@ -192,7 +192,7 @@ const scrollEvent = () => {
 
 const isNotInTheViewport = el => {
   var rect = el.getBoundingClientRect();
-  return rect.top <= 64;
+  return rect.top <= 81;
 }
 
 </script>
