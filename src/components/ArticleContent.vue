@@ -153,7 +153,7 @@ const clickOnLink = async (id) => {
   var urlHash = '#'+id;
   await router.push(urlHash).then(() => {
     window.history.replaceState({ ...window.history.state, ...null}, '');
-    setTimeout(() => document.addEventListener('scroll', scrollEvent), 2000);
+    setTimeout(() => document.addEventListener('scroll', scrollEvent), 1000);
   });
 }
 
@@ -164,28 +164,26 @@ const scrollEvent = () => {
     clearTimeout(timer);
   }
   timer = setTimeout(async () => {
-    let tmp = 0
-    anchors.forEach(async el => {
-      if(isNotInTheViewport(el)) {
-        // update the URL hash
-        if (window.history.pushState) {
-          var urlHash = "#" + el.id;
-          await router.push(urlHash);
-          window.history.replaceState({ ...window.history.state, ...null}, '');
-          updateCurrentAnchor();
-          tmp ++;
-        }
+    if(anchors.length && !isNotInTheViewport(anchors[0])){
+      if (window.history.pushState) {
+        var urlHash = "#" + anchors[0].id;
+        await router.push(urlHash);
+        window.history.replaceState({ ...window.history.state, ...null}, '');
+        updateCurrentAnchor();
       }
-    });
-    if(!tmp) {
-      if(anchors.length) {
-        if (window.history.pushState) {
-          var urlHash = "#" + anchors[0].id;
-          await router.push(urlHash);
-          window.history.replaceState({ ...window.history.state, ...null}, '');
-          updateCurrentAnchor();
+    }
+    else{
+      anchors.forEach(async el => {
+        if(isNotInTheViewport(el)) {
+          // update the URL hash
+          if (window.history.pushState) {
+            var urlHash = "#" + el.id;
+            await router.push(urlHash);
+            window.history.replaceState({ ...window.history.state, ...null}, '');
+            updateCurrentAnchor();
+          }
         }
-      }
+      });
     }
   }, 100);
 }
