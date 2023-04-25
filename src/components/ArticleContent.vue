@@ -15,7 +15,9 @@ const { lang } = storeToRefs(langStore);
 var blogConfig, articleContent = ref('');
 const loading = ref(true);
 var myMarkdownRenderer = new marked.Renderer();
-var heading = [];
+var headingCount = [0, 0, 0];
+var headings = [];
+const headingOffset = ref(0);
 
 (async () => {
   loading.value = true;
@@ -23,11 +25,9 @@ var heading = [];
     blogConfig = import('../assets/blog/en/config.json');
   else
     blogConfig = import('../assets/blog/tw/config.json');
-  loading.value = false;
 })();
 
 watch(lang, async(newV, oldV) => {
-  console.log(lang.value);
   loading.value = true;
   if (newV === 'en')
     blogConfig = import('../assets/blog/en/config.json');
@@ -37,7 +37,27 @@ watch(lang, async(newV, oldV) => {
   loading.value = false;
 });
 
-hljs.highlightAll();
+myMarkdownRenderer.heading = function(text, level) {
+  if (level > 0 && level < 4) {
+    headingCount[level-1] ++;
+    headings.push({
+      id: 'markdown-heading-' + level + '-' + headingCount[level-1],
+      level: level,
+      text: text
+    });
+    return  `
+              <h${level} id="markdown-heading-${level}-${headingCount[level-1]}">
+                ${text}
+              </h${level}>
+            `;
+  }
+  else
+    return  `
+              <h${level}>
+                ${text}
+              </h${level}>
+            `;
+}
 
 marked.setOptions({
   breaks: true,
@@ -53,8 +73,10 @@ marked.setOptions({
 })
 
 const translateMd = async (markdownStr) => {
-  heading = {};
-  return marked.parse(markdownStr)
+  headingCount = [0, 0, 0];
+  headings = [];
+  headingOffset.value = 0;
+  return await marked.parse(markdownStr);
 };
 
 const getMdFile = async () => {
@@ -69,12 +91,18 @@ const getMdFile = async () => {
     res_content = res.data;
   }).catch(e => {
     console.log(e);
+    res_content = 'load resource failed!'
   });
-  translateMd(res_content)
+  await translateMd(res_content)
     .then(res => {
       articleContent.value = res;
-      // console.log(res);
     })
+    .catch(e => {
+      console.log(e);
+      articleContent.value = 'load resource failed!'
+    });
+  for(let i = 0; i < headingCount.length && headingCount[i] == 0; i++)
+    headingOffset.value ++;
 }
 
 onMounted(async() => {
@@ -120,10 +148,34 @@ onMounted(async() => {
       <div id="article-content" class="markdown-body" v-html="articleContent">
       </div>
     </div>
+    <div id="anchor">
+      <input type="checkbox" id="archon-show"/>
+      <label for="archon-show"></label>
+      <ul>
+        <a v-for="heading in headings" :key="heading.text" :style="{'--level': heading.level-headingOffset}" :href="'#'+heading.id">
+          <li>
+              {{ heading.text }}
+          </li>
+        </a>
+      </ul>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+@mixin smallerScreen {
+  @media screen and (max-width: 972px) {
+    @content;
+  }
+}
+
+@mixin phoneScreen {
+  @media screen and (max-width: 576px) {
+    @content;
+  }
+}
+
+
 #article-container {
   width: 100%;
   min-height: calc(100vh - 50px);
@@ -132,6 +184,14 @@ onMounted(async() => {
   display: flex;
   justify-content: center;
   gap: 2rem;
+
+  @include smallerScreen {
+    padding: 4rem 10% 0 10%;
+  }
+
+  @include phoneScreen() {
+    padding: 4rem 5% 0 5%;
+  }
 
   #article {
     width: 100%;
@@ -200,11 +260,16 @@ onMounted(async() => {
       :deep(h2),
       :deep(h3) {
         color: var(--purple-800) !important;
+        scroll-margin-top: 5rem;
       }
       
       :deep(pre:has(code.hljs)),
       :deep(tr) {
         background-color: var(--gray-900);
+      }
+
+      :deep(pre) {
+        max-height: 300px;
       }
 
       :deep(tr):nth-child(2n) {
@@ -241,6 +306,107 @@ onMounted(async() => {
       margin: 0 auto;
       padding: 45px;
     }
+  }
+
+  #anchor {
+    position: fixed;
+    padding: .5rem 0 .5rem .5rem;
+    background: var(--black-thin);
+    width: 14.2rem;
+    border-radius: .375rem;
+    right: 0;
+    top: 8rem;
+    padding-right: 0;
+    font-size: .8rem;
+    display: grid;
+    grid-template-columns: 1.5rem 12.5rem;
+    row-gap: .2rem;
+    place-content: center;
+    transition: transform .5s ease-in-out 0s;
+
+    input {
+      display: none;
+    }
+
+    label {
+      display: none;
+      color: var(--gray-300);
+      font-size: 1.5rem;
+      height: 100%;
+      position: relative;
+
+      @include smallerScreen {
+          display: block;
+      }
+    }
+
+    label::before {
+      content: '>';
+      position: absolute;
+      top: calc((100% - 1.5rem) / 2);
+      left: calc((100% - 1.5ch) / 2);
+    }
+
+    input:checked ~label::before {
+      content: '<';
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: .5rem 1.5rem .5rem 0;
+      // max-width: 13.5rem;
+      width: 12.5rem;
+      transition: width .5s ease-in-out 0s;
+
+      a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin-left: 1rem;
+        position: relative;
+        color: var(--gray-300);
+        height: 1rem;
+        padding: 1rem 0 1rem calc((var(--level) - 1) * 20px);
+        transition: color .25s ease-in-out 0s;
+
+        li {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          width: 100%;
+          // height: 100%;
+        }
+      }
+
+      a:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -1rem;
+        height: 100%;
+        width: .25rem;
+        background: var(--gray-800);
+        transition: color .25s ease-in-out 0s;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+
+      a:hover,
+      a.current {
+        color: var(--purple-700);
+      }
+
+      a.current::before {
+        color: var(--purple-700);
+      }
+    }
+  }
+
+  #anchor:has(input:checked) {
+    transform: translateX(12.5rem);
   }
 }
 </style>
