@@ -1,4 +1,4 @@
-## The BB84 QKD(Quantum key distribution) Protocol
+# The BB84 QKD(Quantum key distribution) Protocol
 If you wanna try this protocol yourself, you can download the files and execute the programs by typing following script in terminal.
 ```sh
 sh run.sh
@@ -6,7 +6,7 @@ sh run.sh
 
 ---
 
-### Basic Steps :
+## Basic Steps 
 Now suppose that there are 2 nodes, Alice and Bob, want to make there own secret shared key.
 
 1. Alice first prepares 3 things: 
@@ -52,14 +52,14 @@ Now suppose that there are 2 nodes, Alice and Bob, want to make there own secret
 
 ---
 
-### What will happen if the communicating is under disruption :
+## What will happen if the communicating is under disruption 
 Now let's consider this protocol to be performed **in reality**, there will be inevitable noise in the communicating channel and others' eavesdropping during the communication. These disruptions will cause the information an idle qubit holds to fade away, resulting in the measurement is not the one expects.  
 Look at step 4, since Alice only sends qubits to Bob, the basis to measure qubits has not been revealed, eavesdropper has no idea which basis to measure in to eavesdrop on the communication; at best, he can only guess, and if his guess goes wrong, he will disturb the state sent to Bob.  
 If the state is disturbed by noise or eavesdropping, Bob will receive the wrong measurement with high probability, and Bob and Alice will discover the disturbance in step 7.
 
 ---
 
-### References : 
+## References 
 Michael A. Nielsen, Isaac L. Chuang, Massachusetts Institute of Technology. (December 2010). Quantum Computation and Quantum Information(10th Anniversary Edition). Cambridge University Press, New York.
 
 
