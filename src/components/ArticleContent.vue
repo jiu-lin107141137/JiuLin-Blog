@@ -1,8 +1,8 @@
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useLangStore } from '../stores/lang';
 import { storeToRefs } from 'pinia';
-import { ref, watch, computed, onMounted } from 'vue';
+import { ref, watch, computed, onMounted, onUnmounted } from 'vue';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import 'github-markdown-css/github-markdown-light.css';
 import 'highlight.js/styles/github-dark.css';
 
 const route = useRoute();
+const router = useRouter();
 const langStore = useLangStore();
 const { lang } = storeToRefs(langStore);
 var blogConfig, articleContent = ref('');
@@ -18,6 +19,9 @@ var myMarkdownRenderer = new marked.Renderer();
 var headingCount = [0, 0, 0];
 var headings = [];
 const headingOffset = ref(0);
+var previousActive = null;
+var timer = null;
+var anchors = [];
 
 (async () => {
   loading.value = true;
@@ -46,7 +50,7 @@ myMarkdownRenderer.heading = function(text, level) {
       text: text
     });
     return  `
-              <h${level} id="markdown-heading-${level}-${headingCount[level-1]}">
+              <h${level} id="markdown-heading-${level}-${headingCount[level-1]}" class='markdown-anchor'>
                 ${text}
               </h${level}>
             `;
@@ -103,13 +107,82 @@ const getMdFile = async () => {
     });
   for(let i = 0; i < headingCount.length && headingCount[i] == 0; i++)
     headingOffset.value ++;
+  anchors = [...document.getElementsByClassName('markdown-anchor')];
+  previousActive = null;
+  if(anchors.length){
+    document.getElementById('to-'+anchors[0].id).click();
+  }
+}
+
+const updateCurrentAnchor = () => {
+  let currentId = window.location.hash.substring(1);
+  if(previousActive){
+    if(previousActive.id == currentId)
+      return;
+    previousActive.classList.remove('current');
+  }
+  // console.log('to-'+currentId)
+  previousActive = document.getElementById('to-'+currentId);
+  previousActive.classList.add('current');
 }
 
 onMounted(async() => {
   loading.value = true;
   await getMdFile();
+  document.addEventListener('scroll', scrollEvent)
   loading.value = false;
 })
+
+onUnmounted(() => {
+  document.removeEventListener('scroll', scrollEvent);
+})
+
+const clickOnLink = async (id) => {
+  console.log('123');
+  document.removeEventListener('scroll', scrollEvent);
+  if(previousActive){
+    if(previousActive.id == 'to-'+id)
+      return;
+    previousActive.classList.remove('current');
+  }
+  window.scrollTo({
+    top: document.getElementById(id).getBoundingClientRect().top + window.scrollY - 80,
+    behavior: 'smooth'
+  })
+  previousActive = document.getElementById('to-'+id);
+  previousActive.classList.add('current');
+  var urlHash = '#'+id;
+  await router.push(urlHash).then(() => {
+    window.history.replaceState({ ...window.history.state, ...null}, '');
+    setTimeout(() => document.addEventListener('scroll', scrollEvent), 1000);
+  });
+}
+
+// Source: http://stackoverflow.com/questions/30734552/change-url-while-scrolling
+// stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
+const scrollEvent = () => {
+  if(timer !== null) {
+    clearTimeout(timer);
+  }
+  timer = setTimeout(() => {
+    anchors.forEach(async el => {
+      if(isNotInTheViewport(el)) {
+        // update the URL hash
+        if (window.history.pushState) {
+          var urlHash = "#" + el.id;
+          await router.push(urlHash);
+          window.history.replaceState({ ...window.history.state, ...null}, '');
+          updateCurrentAnchor();
+        }
+      }
+    });
+  }, 100);
+}
+
+const isNotInTheViewport = el => {
+  var rect = el.getBoundingClientRect();
+  return rect.top <= 64;
+}
 
 </script>
 
@@ -152,7 +225,8 @@ onMounted(async() => {
       <input type="checkbox" id="archon-show"/>
       <label for="archon-show"></label>
       <ul>
-        <a v-for="heading in headings" :key="heading.text" :style="{'--level': heading.level-headingOffset}" :href="'#'+heading.id">
+        <a v-for="heading in headings" :key="heading.text" 
+          :style="{'--level': heading.level-headingOffset}" :id="'to-'+heading.id" @click="clickOnLink(heading.id)">
           <li>
               {{ heading.text }}
           </li>
@@ -261,6 +335,20 @@ onMounted(async() => {
       :deep(h3) {
         color: var(--purple-800) !important;
         scroll-margin-top: 5rem;
+        padding-left: .8rem;
+        position: relative;
+      }
+
+      :deep(h1::before),
+      :deep(h2::before),
+      :deep(h3::before) {
+        content: '';
+        position: absolute;
+        width: .25rem;
+        height: 80%;
+        top: 10%;
+        left: 0;
+        background: var(--purple-200);
       }
       
       :deep(pre:has(code.hljs)),
@@ -369,6 +457,7 @@ onMounted(async() => {
         height: 1rem;
         padding: 1rem 0 1rem calc((var(--level) - 1) * 20px);
         transition: color .25s ease-in-out 0s;
+        cursor: pointer;
 
         li {
           text-overflow: ellipsis;
@@ -386,8 +475,8 @@ onMounted(async() => {
         left: -1rem;
         height: 100%;
         width: .25rem;
-        background: var(--gray-800);
-        transition: color .25s ease-in-out 0s;
+        background: var(--black);
+        transition: background .25s ease-in-out 0s;
       }
 
       a:hover {
@@ -400,7 +489,7 @@ onMounted(async() => {
       }
 
       a.current::before {
-        color: var(--purple-700);
+        background: var(--purple-700);
       }
     }
   }
