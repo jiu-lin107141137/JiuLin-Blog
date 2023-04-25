@@ -199,7 +199,7 @@ onMounted(async() => {
       :deep(h1),
       :deep(h2),
       :deep(h3) {
-        color: var(--purple-700) !important;
+        color: var(--purple-800) !important;
       }
       
       :deep(pre:has(code.hljs)),

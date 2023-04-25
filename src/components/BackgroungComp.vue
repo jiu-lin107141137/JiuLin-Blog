@@ -56,10 +56,10 @@ async function particlesLoaded(container) {
         },
         particles: {
           color: {
-            value: '#ffffff'
+            value: '#dfe3e7'
           },
           links: {
-            color: '#ffffff',
+            color: '#dfe3e7',
             distance: 150,
             enable: true,
             opacity: 0.5,
@@ -81,7 +81,7 @@ async function particlesLoaded(container) {
               enable: true,
               area: 800
             },
-            value: 40
+            value: 20
           },
           opacity: {
             value: 0.5
