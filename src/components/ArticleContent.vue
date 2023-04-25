@@ -145,7 +145,7 @@ const clickOnLink = async (id) => {
     previousActive.classList.remove('current');
   }
   window.scrollTo({
-    top: document.getElementById(id).getBoundingClientRect().top + window.scrollY - 80,
+    top: document.getElementById(id).getBoundingClientRect().top + window.scrollY - 64,
     behavior: 'smooth'
   })
   previousActive = document.getElementById('to-'+id);
