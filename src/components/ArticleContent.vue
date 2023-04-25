@@ -163,7 +163,8 @@ const scrollEvent = () => {
   if(timer !== null) {
     clearTimeout(timer);
   }
-  timer = setTimeout(() => {
+  timer = setTimeout(async () => {
+    let tmp = 0
     anchors.forEach(async el => {
       if(isNotInTheViewport(el)) {
         // update the URL hash
@@ -172,9 +173,20 @@ const scrollEvent = () => {
           await router.push(urlHash);
           window.history.replaceState({ ...window.history.state, ...null}, '');
           updateCurrentAnchor();
+          tmp ++;
         }
       }
     });
+    if(!tmp) {
+      if(anchors.length) {
+        if (window.history.pushState) {
+          var urlHash = "#" + anchors[0].id;
+          await router.push(urlHash);
+          window.history.replaceState({ ...window.history.state, ...null}, '');
+          updateCurrentAnchor();
+        }
+      }
+    }
   }, 100);
 }
 
