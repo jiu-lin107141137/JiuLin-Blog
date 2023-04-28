@@ -105,6 +105,8 @@ const getMdFile = async () => {
       console.log(e);
       articleContent.value = 'load resource failed!'
     });
+
+  // for anchors
   for(let i = 0; i < headingCount.length && headingCount[i] == 0; i++)
     headingOffset.value ++;
   anchors = [...document.getElementsByClassName('markdown-anchor')];
@@ -227,7 +229,19 @@ const isNotInTheViewport = el => {
           Vue, Web
         </div>
       </div>
-      <div id="article-content" class="markdown-body" v-html="articleContent">
+      <div id="article-content-skeleton" v-if="loading">
+        <div class="article-content-skeleton-line"></div>
+        <div class="article-content-skeleton-line"></div>
+        <div class="article-content-skeleton-line"></div>
+        <div class="article-content-skeleton-line-finish" :style="{'--w': (Math.random() * 80)+'%'}"></div>
+        <div class="article-content-skeleton-line"></div>
+        <div class="article-content-skeleton-line"></div>
+        <div class="article-content-skeleton-line-finish" :style="{'--w': (Math.random() * 80)+'%'}"></div>
+        <div class="article-content-skeleton-line"></div>
+        <div class="article-content-skeleton-line-finish" :style="{'--w': (Math.random() * 80)+'%'}"></div>
+        <div class="article-content-skeleton-cover"></div>
+      </div>
+      <div id="article-content" class="markdown-body" v-html="articleContent" v-show="!loading">
       </div>
     </div>
     <div id="anchor">
@@ -396,6 +410,56 @@ const isNotInTheViewport = el => {
       }
     }
 
+    #article-content-skeleton {
+      position: relative;
+      border-radius: .375rem;
+      border: 1px solid var(--gray-900);
+      background: var(--gray-800);
+      padding: 1.5rem;
+      line-height: 2rem;
+      // height: 30rem;
+      display: flex;
+      flex-wrap: wrap;
+      counter-reset: finish-count;
+      overflow: hidden;
+
+      .article-content-skeleton-line, .article-content-skeleton-line-finish {
+        border-radius: 2.5rem;
+        height: 2rem;
+        background: var(--gray-700);
+        margin: 0 0 1.5rem;
+      }
+
+      .article-content-skeleton-line {
+        width: 100%;
+      }
+
+      .article-content-skeleton-line-finish {
+        counter-increment: finish-count;
+        width: var(--w);
+      }
+
+      .article-content-skeleton-cover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--gray-100);
+        opacity: .45;
+        animation: skeleton-cover-animation 2s ease-in-out 0s infinite normal none;
+      }
+
+      @keyframes skeleton-cover-animation {
+        0%, 100% {
+          opacity: .4;
+        }
+        50% {
+          opacity: .6;
+        }
+      }
+    }
+
     .markdown-body {
       box-sizing: border-box;
       min-width: 200px;
@@ -503,8 +567,10 @@ const isNotInTheViewport = el => {
     }
   }
 
-  #anchor:has(input:checked) {
-    transform: translateX(12.5rem);
+  @include smallerScreen {
+    #anchor:has(input:checked) {
+      transform: translateX(12.5rem);
+    }
   }
 }
 </style>
