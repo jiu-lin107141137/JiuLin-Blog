@@ -149,6 +149,7 @@ const getCategories = categoryId => {
     font-size: .8rem;
     color: var(--gray-400);
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: .25rem;
 

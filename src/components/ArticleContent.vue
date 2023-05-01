@@ -199,6 +199,9 @@ const isNotInTheViewport = el => {
 
 <template>
   <div id="article-container">
+    <div id="category">
+
+    </div>
     <div id="article">
       <div id="article-title">
         <span>Blog Titlt 1</span>
@@ -245,16 +248,20 @@ const isNotInTheViewport = el => {
       </div>
     </div>
     <div id="anchor">
-      <input type="checkbox" id="archon-show"/>
-      <label for="archon-show"></label>
-      <ul>
-        <a v-for="heading in headings" :key="heading.text" 
-          :style="{'--level': heading.level-headingOffset}" :id="'to-'+heading.id" @click="clickOnLink(heading.id)">
-          <li>
-              {{ heading.text }}
-          </li>
-        </a>
-      </ul>
+      <div id="control">
+        <input type="checkbox" id="archon-show"/>
+        <label for="archon-show">&nbsp;</label>
+      </div>
+      <div id="navigation">
+        <ul>
+          <a v-for="heading in headings" :key="heading.text" 
+            :style="{'--level': heading.level-headingOffset}" :id="'to-'+heading.id" @click="clickOnLink(heading.id)">
+            <li>
+                {{ heading.text }}
+            </li>
+          </a>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -277,21 +284,42 @@ const isNotInTheViewport = el => {
   width: 100%;
   min-height: calc(100vh - 50px);
   min-height: calc(100svh - 50px);
-  padding: 4rem 30% 0 15%;
+  padding: 4rem 0 0 0;
   display: flex;
-  justify-content: center;
-  gap: 2rem;
+  justify-content: space-between;
+  // justify-content: center;
+  gap: .5rem;
+  position: relative;
 
   @include smallerScreen {
-    padding: 4rem 10% 0 10%;
+    padding: 4rem 0 0;
+
+    #article {
+      width: 85% !important;
+    }
   }
 
   @include phoneScreen() {
-    padding: 4rem 5% 0 5%;
+    padding: 4rem 0 0;
+    #category {
+      width: 0 !important;
+    }
+
+    #article {
+      width: 100% !important;
+      margin: 0 !important;
+      #article-info {
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  #category {
+    width: 15%;
   }
 
   #article {
-    width: 100%;
+    width: 70%;
     height: fit-content;
     display: grid;
     grid-template-columns: 1fr;
@@ -303,7 +331,7 @@ const isNotInTheViewport = el => {
     padding: .5rem 1rem;
 
     div {
-      width: 100%;
+      // width: 100%;
       color: var(--gray-300);
     }
 
@@ -463,113 +491,143 @@ const isNotInTheViewport = el => {
     .markdown-body {
       box-sizing: border-box;
       min-width: 200px;
-      max-width: 980px;
-      margin: 0 auto;
+      max-width: 1000px;
+      width: 100%;
+      // margin: 0 auto;
       padding: 45px;
     }
   }
 
   #anchor {
-    position: fixed;
+    width: 15%;
+    min-width: fit-content;
+    position: sticky;
+    top: 5rem;
+    right: 0;
+    height: fit-content;
     padding: .5rem 0 .5rem .5rem;
     background: var(--black-thin);
-    width: 14.2rem;
     border-radius: .375rem;
-    right: 0;
-    top: 8rem;
-    padding-right: 0;
+    border-top-left-radius: 0;
     font-size: .8rem;
-    display: grid;
-    grid-template-columns: 1.5rem 12.5rem;
-    row-gap: .2rem;
-    place-content: center;
-    transition: transform .5s ease-in-out 0s;
 
-    input {
+    #control {
+      width: 0;
+      height: 0;
       display: none;
-    }
+      input {
+        display: none;
+      }
 
-    label {
-      display: none;
-      color: var(--gray-300);
-      font-size: 1.5rem;
-      height: 100%;
-      position: relative;
+      label {
+        position: relative;
+        width: 1rem;
+        height: 1.5rem;
+        background: var(--black-thin);
+      }
 
-      @include smallerScreen {
-          display: block;
+      label::before {
+        content: '>';
+        position: absolute;
+        color: var(--gray-300);
+        border: 1px solid var(--gray-700);
+        border-right-color: var(--black-thin);
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+      }
+
+      input:checked ~ label::before {
+        content: '<';
       }
     }
+    
+    #navigation {
+      width: 200px;
 
-    label::before {
-      content: '>';
-      position: absolute;
-      top: calc((100% - 1.5rem) / 2);
-      left: calc((100% - 1.5ch) / 2);
-    }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: .5rem 1.5rem .5rem 0;
+        // max-width: 13.5rem;
+        width: 12.5rem;
+        transition: width .5s ease-in-out 0s;
 
-    input:checked ~label::before {
-      content: '<';
-    }
-
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: .5rem 1.5rem .5rem 0;
-      // max-width: 13.5rem;
-      width: 12.5rem;
-      transition: width .5s ease-in-out 0s;
-
-      a {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        margin-left: 1rem;
-        position: relative;
-        color: var(--gray-300);
-        height: 1rem;
-        padding: 1rem 0 1rem calc((var(--level) - 1) * 20px);
-        transition: color .25s ease-in-out 0s;
-        cursor: pointer;
-
-        li {
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
+        a {
+          display: flex;
+          align-items: center;
           width: 100%;
-          // height: 100%;
+          margin-left: 1rem;
+          position: relative;
+          color: var(--gray-300);
+          height: 1rem;
+          padding: 1rem 0 1rem calc((var(--level) - 1) * 20px);
+          transition: color .25s ease-in-out 0s;
+          cursor: pointer;
+
+          li {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+            // height: 100%;
+          }
+        }
+
+        a:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -1rem;
+          height: 100%;
+          width: .25rem;
+          background: var(--black);
+          transition: background .25s ease-in-out 0s;
+        }
+
+        a:hover {
+          text-decoration: none;
+        }
+
+        a:hover,
+        a.current {
+          color: var(--purple-700);
+        }
+
+        a.current::before {
+          background: var(--purple-700);
         }
       }
+    }
 
-      a:before {
-        content: '';
+    @include smallerScreen {
+      position: fixed;
+      width: fit-content;
+      border: 1px solid var(--gray-700);
+      border-right: none;
+      transform: translateX(0);
+      transition: transform .25s ease-in-out 0s;
+      background: var(--gray-900);
+
+      #control {
+        width: fit-content;
+        height: fit-content;
+        display: inline-block;
         position: absolute;
-        top: 0;
-        left: -1rem;
-        height: 100%;
-        width: .25rem;
-        background: var(--black);
-        transition: background .25s ease-in-out 0s;
-      }
+        top: -1px;
+        left: -15px;
 
-      a:hover {
-        text-decoration: none;
-      }
-
-      a:hover,
-      a.current {
-        color: var(--purple-700);
-      }
-
-      a.current::before {
-        background: var(--purple-700);
+        label {
+      background: var(--gray-900);
+        }
       }
     }
   }
 
   @include smallerScreen {
-    #anchor:has(input:checked) {
-      transform: translateX(12.5rem);
+    #anchor:has(div input:checked) {
+      transform: translateX(210px);
     }
   }
 }
