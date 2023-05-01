@@ -160,7 +160,6 @@ watch(() => route.name, () => {
   // width: 100vw;
   // width: 100svw;
   width: 100%;
-  min-width: 260px;
   min-height: 4rem;
   background: transparent;
   backdrop-filter: blur(10px);

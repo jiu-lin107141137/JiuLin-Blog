@@ -81,7 +81,7 @@ const getArticlesCount = computed(() => {
 
 #articles-conatiner {
   width: 75%;
-  min-width: 250px;
+  min-width: 506px;
   height: fit-content;
   background: var(--black-thin);
   border-radius: .5rem;
@@ -94,6 +94,7 @@ const getArticlesCount = computed(() => {
 
   @include smallerScreen {
     width: 100% !important;
+    min-width: 372px !important;
     margin-top: 2rem;
   }
 }

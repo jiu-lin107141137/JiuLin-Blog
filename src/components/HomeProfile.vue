@@ -140,7 +140,7 @@ const getArticlesCount = computed(() => loadding.value || !blogConfig ? 0 : blog
 
 #profiles {
   width: 25%;
-  min-width: 250px;
+  min-width: 314px; // 250+64
   max-width: 414px;
   height: fit-content;
   // position: sticky;
@@ -160,6 +160,7 @@ const getArticlesCount = computed(() => loadding.value || !blogConfig ? 0 : blog
     position: relative;
     top: 0;
     width: 100% !important;
+    min-width: 372px !important;
     max-width: none !important;
   }
 
