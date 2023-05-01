@@ -101,8 +101,14 @@ const getCategories = categoryId => {
 </template>
 
 <style lang="scss" scoped>
+@mixin phoneScreen {
+  @media screen and (max-width: 576px) {
+    @content;
+  }
+}
 .article {
   width: 100%;
+  min-width: 250px;
   margin: 1rem 0;
   padding: 1rem;
   cursor: pointer;

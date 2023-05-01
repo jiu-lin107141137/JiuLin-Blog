@@ -51,7 +51,7 @@ onMounted(() => {
   position: relative;
   top: 100px;
   display: flex;
-  padding: 2rem 12.5rem;
+  padding: 2rem 12.5%;
   justify-content: center;
   gap: 1.5rem;
   position: relative;
