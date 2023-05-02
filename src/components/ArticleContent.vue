@@ -135,11 +135,10 @@ const updateCurrentAnchor = () => {
 
 onMounted(async() => {
   await getMdFile();
-      document.addEventListener('scroll', scrollEvent);
 })
 
 onUnmounted(() => {
-  document.removeEventListener('scroll', scrollEvent, true);
+  document.removeEventListener('scroll', scrollEvent);
 })
 
 const clickOnLink = async (id, useCapture=false) => {
