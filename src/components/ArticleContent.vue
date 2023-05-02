@@ -336,7 +336,7 @@ const isNotInTheViewport = el => {
   }
 
   #category {
-    width: 15%;
+    // width: 15%;
     min-width: 200px;
     height: calc(100vh - 4rem);
     height: calc(100svh - 4rem);
@@ -397,7 +397,7 @@ const isNotInTheViewport = el => {
   }
 
   #article {
-    width: 70%;
+    width: 100%;
     height: fit-content;
     display: grid;
     grid-template-columns: 1fr;
@@ -569,7 +569,7 @@ const isNotInTheViewport = el => {
     .markdown-body {
       box-sizing: border-box;
       min-width: 200px;
-      max-width: 1000px;
+      // max-width: 1000px;
       width: 100%;
       // margin: 0 auto;
       padding: 45px;
