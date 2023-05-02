@@ -118,7 +118,7 @@ const getMdFile = async () => {
   loading.value = false;
   
   if(anchors.length)
-    await clickOnLink(anchors[0].id);
+    await clickOnLink(anchors[0].id, true);
 }
 
 const updateCurrentAnchor = () => {
@@ -135,15 +135,16 @@ const updateCurrentAnchor = () => {
 
 onMounted(async() => {
   await getMdFile();
-  document.addEventListener('scroll', scrollEvent);
+      document.addEventListener('scroll', scrollEvent);
 })
 
 onUnmounted(() => {
   document.removeEventListener('scroll', scrollEvent, true);
 })
 
-const clickOnLink = async (id) => {
-  document.removeEventListener('scroll', scrollEvent, true);
+const clickOnLink = async (id, useCapture=false) => {
+  document.removeEventListener('scroll', scrollEvent, useCapture);
+  console.log('removed');
   if(previousActive){
     if(previousActive.id == 'to-'+id)
       return;
@@ -153,18 +154,18 @@ const clickOnLink = async (id) => {
     top: document.getElementById(id).getBoundingClientRect().top + window.scrollY - 80,
     behavior: 'smooth'
   })
+  previousActive = document.getElementById('to-'+id);
+  previousActive.classList.add('current');
+  // console.log(previousActive);
   var urlHash = '#'+id;
   await router.push(urlHash).then(() => {
     window.history.replaceState({ ...window.history.state, ...null}, '');
     if(timer2 !== null)
       clearTimeout(timer2);
     timer2 = setTimeout(() => {
-      console.log('added');
-      document.addEventListener('scroll', scrollEvent)
-    }, 1000)
+      document.addEventListener('scroll', scrollEvent);
+    }, 1000);
   });
-  previousActive = document.getElementById('to-'+id);
-  previousActive.classList.add('current');
 }
 
 // Source: http://stackoverflow.com/questions/30734552/change-url-while-scrolling
@@ -174,6 +175,7 @@ const scrollEvent = () => {
     clearTimeout(timer);
   }
   timer = setTimeout(async () => {
+    console.log("here");
     if(anchors.length && !isNotInTheViewport(anchors[0])){
       if (window.history.pushState) {
         var urlHash = "#" + anchors[0].id;
