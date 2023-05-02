@@ -21,6 +21,7 @@ var headings = [];
 const headingOffset = ref(0);
 var previousActive = null;
 var timer = null;
+var timer2 = null;
 var anchors = [];
 
 (async () => {
@@ -34,11 +35,10 @@ var anchors = [];
 watch(lang, async(newV, oldV) => {
   loading.value = true;
   if (newV === 'en')
-    blogConfig = import('../assets/blog/en/config.json');
+    blogConfig = await import('../assets/blog/en/config.json');
   else
-    blogConfig = import('../assets/blog/tw/config.json');
+    blogConfig = await import('../assets/blog/tw/config.json');
   await getMdFile();
-  loading.value = false;
 });
 
 myMarkdownRenderer.heading = function(text, level) {
@@ -84,6 +84,8 @@ const translateMd = async (markdownStr) => {
 };
 
 const getMdFile = async () => {
+  loading.value = true;
+
   let path = '/blog/' + lang.value + '/' + route.params.name + '.md';
   if (import.meta.url.startsWith('https://jiu-lin107141137.github.io/JiuLin-Blog/'))
     path = '/JiuLin-Blog' + path;
@@ -97,6 +99,7 @@ const getMdFile = async () => {
     console.log(e);
     res_content = 'load resource failed!'
   });
+
   await translateMd(res_content)
     .then(res => {
       articleContent.value = res;
@@ -111,9 +114,11 @@ const getMdFile = async () => {
     headingOffset.value ++;
   anchors = [...document.getElementsByClassName('markdown-anchor')];
   previousActive = null;
-  if(anchors.length){
-    document.getElementById('to-'+anchors[0].id).click();
-  }
+
+  loading.value = false;
+  
+  if(anchors.length)
+    await clickOnLink(anchors[0].id);
 }
 
 const updateCurrentAnchor = () => {
@@ -123,24 +128,22 @@ const updateCurrentAnchor = () => {
       return;
     previousActive.classList.remove('current');
   }
-  // console.log('to-'+currentId)
+  console.log('to-'+currentId)
   previousActive = document.getElementById('to-'+currentId);
   previousActive.classList.add('current');
 }
 
 onMounted(async() => {
-  loading.value = true;
   await getMdFile();
-  document.addEventListener('scroll', scrollEvent)
-  loading.value = false;
+  document.addEventListener('scroll', scrollEvent);
 })
 
 onUnmounted(() => {
-  document.removeEventListener('scroll', scrollEvent);
+  document.removeEventListener('scroll', scrollEvent, true);
 })
 
 const clickOnLink = async (id) => {
-  document.removeEventListener('scroll', scrollEvent);
+  document.removeEventListener('scroll', scrollEvent, true);
   if(previousActive){
     if(previousActive.id == 'to-'+id)
       return;
@@ -150,13 +153,18 @@ const clickOnLink = async (id) => {
     top: document.getElementById(id).getBoundingClientRect().top + window.scrollY - 80,
     behavior: 'smooth'
   })
-  previousActive = document.getElementById('to-'+id);
-  previousActive.classList.add('current');
   var urlHash = '#'+id;
   await router.push(urlHash).then(() => {
     window.history.replaceState({ ...window.history.state, ...null}, '');
-    setTimeout(() => document.addEventListener('scroll', scrollEvent), 1000);
+    if(timer2 !== null)
+      clearTimeout(timer2);
+    timer2 = setTimeout(() => {
+      console.log('added');
+      document.addEventListener('scroll', scrollEvent)
+    }, 1000)
   });
+  previousActive = document.getElementById('to-'+id);
+  previousActive.classList.add('current');
 }
 
 // Source: http://stackoverflow.com/questions/30734552/change-url-while-scrolling
@@ -187,7 +195,7 @@ const scrollEvent = () => {
         }
       });
     }
-  }, 100);
+  }, 200);
 }
 
 const isNotInTheViewport = el => {
@@ -521,9 +529,9 @@ const isNotInTheViewport = el => {
 
       label {
         position: relative;
-        width: 1rem;
-        height: 1.5rem;
-        background: var(--black-thin);
+        width: 2rem;
+        height: 2.5rem;
+        background: var(--gray-900);
       }
 
       label::before {
@@ -532,10 +540,12 @@ const isNotInTheViewport = el => {
         color: var(--gray-300);
         border: 1px solid var(--gray-700);
         border-right-color: var(--black-thin);
+        border-top-left-radius: .375rem;
+        border-bottom-left-radius: .375rem;
         height: 100%;
         width: 100%;
         text-align: center;
-        font-size: 1rem;
+        font-size: 1.5rem;
       }
 
       input:checked ~ label::before {
@@ -616,11 +626,7 @@ const isNotInTheViewport = el => {
         display: inline-block;
         position: absolute;
         top: -1px;
-        left: -15px;
-
-        label {
-      background: var(--gray-900);
-        }
+        left: -31px; // 2rem - 1px
       }
     }
   }
