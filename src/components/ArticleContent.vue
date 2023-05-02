@@ -209,7 +209,18 @@ const isNotInTheViewport = el => {
 <template>
   <div id="article-container">
     <div id="category">
-
+      <div class="title">
+        Vue
+      </div>
+      <div class="name">
+        blog 1
+      </div>
+      <div class="name current">
+        text
+      </div>
+      <div class="name">
+        Lorem, ipsum dolor.
+      </div>
     </div>
     <div id="article">
       <div id="article-title">
@@ -312,6 +323,7 @@ const isNotInTheViewport = el => {
     padding: 4rem 0 0;
     #category {
       width: 0 !important;
+      display: none !important;
     }
 
     #article {
@@ -325,6 +337,62 @@ const isNotInTheViewport = el => {
 
   #category {
     width: 15%;
+    height: calc(100vh - 4rem);
+    height: calc(100svh - 4rem);
+    background: var(--black-thin);
+    border-right: 1px solid var(--gray-700);
+    padding: .5rem 0 0;
+    position: sticky;
+    top: 4rem;
+    left: 0;
+    overflow: hidden;
+    // display: flex;
+    // flex-wrap: wrap;
+    // align-items: start;
+
+    div {
+      width: 100%;
+      padding: .5rem 0 .5rem 1rem;
+      height: fit-content;
+      color: var(--gray-100);
+    }
+
+    .title {
+      font-size: 1.1rem;
+      color: var(--purple-700);
+      position: relative;
+    }
+    .name {
+      font-size: .9rem;
+      margin-left: 1rem;
+      position: relative;
+      cursor: pointer;
+      transition: color .25s ease-in-out 0s;
+    }
+
+    .name::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      width: 2px;
+      height: 100%;
+      background: var(--black);
+      transition: opacity .25s ease-in-out 0s;
+    }
+
+    .name:hover,
+    .name.current {
+      color: var(--purple-700);
+    }
+
+    .name.current {
+      background: var(--purple-200);
+    }
+
+    .name.current::after {
+      background: var(--purple-700);
+    }
   }
 
   #article {
