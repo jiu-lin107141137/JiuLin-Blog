@@ -337,15 +337,15 @@ const isNotInTheViewport = el => {
 
   #category {
     width: 15%;
+    min-width: 200px;
     height: calc(100vh - 4rem);
     height: calc(100svh - 4rem);
     background: var(--black-thin);
     border-right: 1px solid var(--gray-700);
-    padding: .5rem 0 0;
+    padding: .5rem 0 0 1rem;
     position: sticky;
     top: 4rem;
     left: 0;
-    overflow: hidden;
     // display: flex;
     // flex-wrap: wrap;
     // align-items: start;
@@ -361,10 +361,11 @@ const isNotInTheViewport = el => {
       font-size: 1.1rem;
       color: var(--purple-700);
       position: relative;
+      margin-left: -1rem;
     }
     .name {
       font-size: .9rem;
-      margin-left: 1rem;
+      // margin-left: 1rem;
       position: relative;
       cursor: pointer;
       transition: color .25s ease-in-out 0s;
@@ -374,7 +375,7 @@ const isNotInTheViewport = el => {
       content: '';
       position: absolute;
       top: 0;
-      right: 1rem;
+      right: 0;
       width: 2px;
       height: 100%;
       background: var(--black);
