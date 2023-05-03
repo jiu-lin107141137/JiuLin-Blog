@@ -1,11 +1,17 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
 import { useLangStore } from '../stores/lang';
+import { useQueryStore } from '../stores/query';
 import { storeToRefs } from 'pinia';
+import { useRoute, useRouter } from 'vue-router';
 import { computed, watch, ref } from 'vue';
+
+const route = useRoute();
+const router = useRouter();
 
 const langStore = useLangStore();
 const { lang } = storeToRefs(langStore);
+const queryStore = useQueryStore();
 
 var blogConfig;
 const loadding = ref(true);
@@ -68,6 +74,17 @@ const getCategories = computed(() => {
 
 const getArticlesCount = computed(() => loadding.value || !blogConfig ? 0 : blogConfig.articles.length);
 
+const toTagQuery = async id => {
+  queryStore.initTag(id);
+  // if(route.name != 'tagQuery')
+  router.push({
+    name: 'tagQuery',
+    state: {
+      tagId: id
+    }
+  });
+}
+
 </script>
 
 <template>
@@ -116,7 +133,7 @@ const getArticlesCount = computed(() => loadding.value || !blogConfig ? 0 : blog
         </span>
       </div>
       <div id="tags-body" class="statistics-body">
-        <div class="tag" v-for="tag in getTags" :key="tag.tagName">
+        <div class="tag" v-for="(tag, ind) in getTags" :key="tag.tagName" @click.stop="toTagQuery(ind)">
           <span>{{ tag.tagName }}</span>
           <span>{{ tag.tagCount }}</span>
         </div>

@@ -1,9 +1,11 @@
 <script setup>
 import { useLangStore } from '../stores/lang';
+import { useQueryStore } from '../stores/query';
 import { storeToRefs } from 'pinia';
 import { ref, watch, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
 const router = useRouter();
 
 const props = defineProps({
@@ -23,6 +25,8 @@ const props = defineProps({
 
 const langStore = useLangStore();
 const { lang } = storeToRefs(langStore);
+
+const queryStore = useQueryStore();
 
 var blogConfig;
 const loadding = ref(true);
@@ -59,10 +63,21 @@ const getCategories = categoryId => {
   return blogConfig.items.categories[categoryId];
 };
 
+const toTagQuery = async id => {
+  queryStore.initTag(id);
+  if(route.name != 'tagQuery')
+    await router.push({
+      name: 'tagQuery',
+      state: {
+        tagId: id
+      }
+    });
+}
+
 </script>
 
 <template>
-  <div class="article" @click.prevent="router.push('/article/'+article.url)">
+  <div class="article" @click="router.push('/article/'+article.url)">
     <div class="article_title">
       <span>{{ article.title }}</span>
     </div>
@@ -88,7 +103,7 @@ const getCategories = categoryId => {
     </div>
     <hr>
     <div class="article_tags">
-      <div class="article_tag" v-for="tagId in article.tags" :key="tagId">
+      <div class="article_tag" v-for="tagId in article.tags" :key="tagId" @click.stop="toTagQuery(tagId)">
         <span class="material-symbols-outlined">
           sell
         </span>
