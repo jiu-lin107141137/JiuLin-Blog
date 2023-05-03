@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import ArticleView from '../views/ArticleView.vue';
+import TagQueryView from '../views/TagQueryView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,8 +15,14 @@ const router = createRouter({
     {
       path: '/article/:name',
       name: 'article',
-      component: ArticleView
+      component: ArticleView,
     },
+    {
+      path: '/tags',
+      name: 'tagQuery',
+      component: TagQueryView,
+      props: true,
+    }
     // { 
     //   path: "*", 
     //   redirect: '/'

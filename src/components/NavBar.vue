@@ -1,12 +1,15 @@
 <script setup>
 import { useLangStore } from '../stores/lang';
+import { useQueryStore } from '../stores/query';
 import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
 import { computed, watch, ref, onMounted, onUnmounted } from 'vue';
 
+const route = useRoute();
 const router = useRouter();
 const langStore = useLangStore();
 const { lang } = storeToRefs(langStore);
+const queryStore = useQueryStore();
 
 const currentLang = computed({
   get() {
@@ -52,7 +55,6 @@ const getCategories = computed(() => {
   return blogConfig.items.categories;
 })
 
-const route = useRoute();
 let nav = null, vh = 0;
 
 const changeEvent = () => {
@@ -105,6 +107,17 @@ watch(() => route.name, () => {
   }
 })
 
+const toTagQuery = async id => {
+  queryStore.initTag(id);
+  if(route.name != 'tagQuery')
+    router.push({
+      name: 'tagQuery',
+      state: {
+        tagId: id
+      }
+    });
+}
+
 </script>
 
 <template>
@@ -134,7 +147,7 @@ watch(() => route.name, () => {
         {{ $t('home.profile.title.tags') }}
         <div class="data-dropdown-items">
           <div v-for="(tag, index) in getTags" :key="tag" :style="{ '--i' : index-1 }">
-            <span>
+            <span @click="toTagQuery(index)">
               {{ tag }}
             </span>
           </div>

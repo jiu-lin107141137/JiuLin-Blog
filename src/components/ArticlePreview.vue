@@ -19,7 +19,7 @@ const props = defineProps({
     },
     required: true,
   }
-})
+});
 
 const langStore = useLangStore();
 const { lang } = storeToRefs(langStore);

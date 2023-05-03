@@ -128,7 +128,7 @@ const updateCurrentAnchor = () => {
       return;
     previousActive.classList.remove('current');
   }
-  console.log('to-'+currentId)
+  // console.log('to-'+currentId);
   previousActive = document.getElementById('to-'+currentId);
   previousActive.classList.add('current');
 }
@@ -143,7 +143,7 @@ onUnmounted(() => {
 
 const clickOnLink = async (id, useCapture=false) => {
   document.removeEventListener('scroll', scrollEvent, useCapture);
-  console.log('removed');
+  // console.log('removed');
   if(previousActive){
     if(previousActive.id == 'to-'+id)
       return;
@@ -157,7 +157,7 @@ const clickOnLink = async (id, useCapture=false) => {
   previousActive.classList.add('current');
   // console.log(previousActive);
   var urlHash = '#'+id;
-  await router.push(urlHash).then(() => {
+  await router.replace(urlHash).then(() => {
     window.history.replaceState({ ...window.history.state, ...null}, '');
     if(timer2 !== null)
       clearTimeout(timer2);
@@ -174,11 +174,11 @@ const scrollEvent = () => {
     clearTimeout(timer);
   }
   timer = setTimeout(async () => {
-    console.log("here");
+    // console.log("here");
     if(anchors.length && !isNotInTheViewport(anchors[0])){
       if (window.history.pushState) {
         var urlHash = "#" + anchors[0].id;
-        await router.push(urlHash);
+        await router.replace(urlHash);
         window.history.replaceState({ ...window.history.state, ...null}, '');
         updateCurrentAnchor();
       }
@@ -189,7 +189,7 @@ const scrollEvent = () => {
           // update the URL hash
           if (window.history.pushState) {
             var urlHash = "#" + el.id;
-            await router.push(urlHash);
+            await router.replace(urlHash);
             window.history.replaceState({ ...window.history.state, ...null}, '');
             updateCurrentAnchor();
           }
@@ -298,7 +298,6 @@ const isNotInTheViewport = el => {
     @content;
   }
 }
-
 
 #article-container {
   width: 100%;
