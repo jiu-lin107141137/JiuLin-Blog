@@ -27,9 +27,9 @@ var anchors = [];
 (async () => {
   loading.value = true;
   if (lang.value === 'en')
-    blogConfig = import('../assets/blog/en/config.json');
+    blogConfig = await import('../assets/blog/en/config.json');
   else
-    blogConfig = import('../assets/blog/tw/config.json');
+    blogConfig = await import('../assets/blog/tw/config.json');
 })();
 
 watch(lang, async(newV, oldV) => {
@@ -40,6 +40,15 @@ watch(lang, async(newV, oldV) => {
     blogConfig = await import('../assets/blog/tw/config.json');
   await getMdFile();
 });
+
+watch(() => route.params.name, async() => {
+  // loading.value = true;
+  // if (newV === 'en')
+  //   blogConfig = await import('../assets/blog/en/config.json');
+  // else
+  //   blogConfig = await import('../assets/blog/tw/config.json');
+  await getMdFile();
+})
 
 myMarkdownRenderer.heading = function(text, level) {
   if (level > 0 && level < 4) {
@@ -204,27 +213,71 @@ const isNotInTheViewport = el => {
   return rect.top <= 81;
 }
 
+const articleInfo = computed(() => {
+  if(loading.value || !blogConfig)
+    return {};
+
+  let a = blogConfig.articles.find(a => a.url == route.params.name);
+
+  /*
+    {
+      "title" : "title5",
+      "summary" : "summary",
+      "created_at" : "22/04/2023 11:16",
+      "tags" : [
+        0, 3
+      ],
+      "category" : 1,
+      "url" : "title5"
+    }
+  */
+  return {
+    title: a.title,
+    time: a.created_at,
+    tags: a.tags.map(t => blogConfig.items.tags[t]).join(', '),
+    category: blogConfig.items.categories[a.category],
+    categoryId: a.category
+  }
+});
+
+const articlesUnderSameCategory = computed(() => {
+  if(loading.value || !blogConfig)
+    return [];
+  
+  let aInfo = articleInfo.value;
+  let rt = blogConfig.articles.filter(a => a.category === aInfo.categoryId)
+            .sort((a, b) => toDatetimeFormat(b.created_at).getTime() - toDatetimeFormat(a.created_at).getTime());
+
+  return rt;
+});
+
+const toDatetimeFormat = dtStr => {
+  if (!dtStr) return null
+  let dateParts = dtStr.split("/");
+  let timeParts = dateParts[2].split(" ")[1].split(":");
+  dateParts[2] = dateParts[2].split(" ")[0];
+
+  return new Date(+dateParts[2], +dateParts[1] - 1, +dateParts[0], +timeParts[0], +timeParts[1]);
+}
 </script>
 
 <template>
   <div id="article-container">
     <div id="category">
       <div class="title">
-        Vue
+        {{ articleInfo.category }}
       </div>
-      <div class="name">
-        blog 1
-      </div>
-      <div class="name current">
-        text
-      </div>
-      <div class="name">
-        Lorem, ipsum dolor.
+      <div class="name"
+          v-for="a in articlesUnderSameCategory"
+          :key="a.url"
+          :class="{'current': a.url === route.params.name}"
+          @click="router.push('/article/'+a.url)">
+        {{ a.title }}
       </div>
     </div>
     <div id="article">
       <div id="article-title">
-        <span>Blog Titlt 1</span>
+        <span>{{ articleInfo?.title || 'Loading...' }}</span>
       </div>
       <div id="article-info">
         <div class="pair">
@@ -237,19 +290,19 @@ const isNotInTheViewport = el => {
           <span class="material-symbols-outlined">
             schedule
           </span>
-          24/04/2023 01:53
+          {{ articleInfo?.time || 'Loading...' }}
         </div>
         <div class="pair">
           <span class="material-symbols-outlined">
             topic
           </span>
-          Blog
+          {{ articleInfo?.category || 'Loading...' }}
         </div>
         <div class="pair">
           <span class="material-symbols-outlined">
             sell
           </span>
-          Vue, Web
+          {{ articleInfo?.tags || 'Loading...' }}
         </div>
       </div>
       <div id="article-content-skeleton" v-if="loading">
