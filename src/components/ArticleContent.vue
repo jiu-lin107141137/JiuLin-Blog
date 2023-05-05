@@ -422,7 +422,7 @@ const toDatetimeFormat = dtStr => {
     }
 
     .title {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: var(--purple-700);
       position: relative;
       margin-left: -1rem;
@@ -432,7 +432,7 @@ const toDatetimeFormat = dtStr => {
       // margin-left: 1rem;
       position: relative;
       cursor: pointer;
-      transition: color .25s ease-in-out 0s;
+      transition: background .25s ease-in-out 0s;
     }
 
     .name::after {
@@ -448,7 +448,8 @@ const toDatetimeFormat = dtStr => {
 
     .name:hover,
     .name.current {
-      color: var(--purple-700);
+      // color: var(--purple-700);
+      background: var(--gray-900);
     }
 
     .name.current {
