@@ -112,9 +112,20 @@ const toTagQuery = async id => {
   if(route.name != 'tagQuery')
     router.push({
       name: 'tagQuery',
-      state: {
-        tagId: id
-      }
+      // state: {
+      //   tagId: id
+      // }
+    });
+}
+
+const toCategoryQuery = async id => {
+  queryStore.initCategory(id);
+  if(route.name != 'categoryQuery')
+    router.push({
+      name: 'categoryQuery',
+      // state: {
+      //   tagId: id
+      // }
     });
 }
 
@@ -136,7 +147,7 @@ const toTagQuery = async id => {
         {{ $t('home.profile.title.categories') }}
         <div class="data-dropdown-items">
           <div v-for="(category, index) in getCategories" :key="category" :style="{ '--i' : index-1 }">
-            <span>
+            <span @click="toCategoryQuery(index)">
               {{ category }}
             </span>
           </div>

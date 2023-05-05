@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import ArticleView from '../views/ArticleView.vue';
 import TagQueryView from '../views/TagQueryView.vue';
+import CategoryQueryView from '../views/CategoryQueryView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,12 @@ const router = createRouter({
       path: '/tags',
       name: 'tagQuery',
       component: TagQueryView,
+      props: true,
+    },
+    {
+      path: '/categories',
+      name: 'categoryQuery',
+      component: CategoryQueryView,
       props: true,
     }
     // { 

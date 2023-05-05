@@ -68,9 +68,20 @@ const toTagQuery = async id => {
   if(route.name != 'tagQuery')
     await router.push({
       name: 'tagQuery',
-      state: {
-        tagId: id
-      }
+      // state: {
+      //   tagId: id
+      // }
+    });
+}
+
+const toCategoryQuery = async id => {
+  queryStore.initCategory(id);
+  if(route.name != 'categoryQuery')
+    await router.push({
+      name: 'categoryQuery',
+      // state: {
+      //   tagId: id
+      // }
     });
 }
 
@@ -82,18 +93,30 @@ const toTagQuery = async id => {
       <span>{{ article.title }}</span>
     </div>
     <div class="article_time">
-      <span class="material-symbols-outlined">
-        person
-      </span>
-      JiuLin
-      <span class="material-symbols-outlined">
-        schedule
-      </span>
-      {{ article.created_at }}
-      <span class="material-symbols-outlined">
-        topic
-      </span>
-      {{ getCategories(article.category) }}
+      <div>
+        <span class="material-symbols-outlined">
+          person
+        </span>
+        <span>
+          JiuLin
+        </span> 
+      </div>
+      <div>
+        <span class="material-symbols-outlined">
+          schedule
+        </span>
+        <span>
+          {{ article.created_at }}
+        </span>
+      </div>
+      <div>
+        <span class="material-symbols-outlined">
+          topic
+        </span>
+        <span @click.stop="toCategoryQuery(article.category)">
+          {{ getCategories(article.category) }}
+        </span>
+      </div>
     </div>
     <hr>
     <div class="article_content">
@@ -167,15 +190,24 @@ const toTagQuery = async id => {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: .25rem;
+    gap: .75rem;
 
-    span:nth-child(n+2) {
-      margin-left: .5rem;
+    div {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+
+      span:first-child {
+        font-size: .9rem;
+      }
     }
+    // span:nth-child(n+2) {
+    //   margin-left: .5rem;
+    // }
     
-    span {
-      font-size: .9rem;
-    }
+    // span {
+    //   font-size: .9rem;
+    // }
   }
 
   .article_content {

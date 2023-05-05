@@ -77,14 +77,14 @@ const getCategoryConstraint = computed(() => {
 const getArticles = computed(() => {
   if(loadding.value || !blogConfig)
     return [];
-  let res = blogConfig.articles
+  let res = blogConfig.articles;
   if(props.constraints[0])
     res = res.filter(a => {
       return getTagConstraint.value.every(i => a.tags.indexOf(i) > -1);
     });
   if(props.constraints[1])
     res = res.filter(a => {
-      return getCategoryConstraint.value.indexOf(a.category) > 1;
+      return getCategoryConstraint.value.indexOf(a.category) > -1;
     });
   res.sort((a, b) => toDatetimeFormat(b.created_at).getTime() - toDatetimeFormat(a.created_at).getTime());
 

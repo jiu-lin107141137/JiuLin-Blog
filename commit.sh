@@ -3,7 +3,7 @@
 set -e
 
 git add .
-git commit -m "add link on tag to query page"
+git commit -m "add category query function and adjust article heading flags."
 
 # 將 dist資料夾中的內容推送至遠端 hexWeek6Demo的 gh-pages分支中
 git push -f https://github.com/jiu-lin107141137/JiuLin-Blog.git

@@ -473,8 +473,8 @@ const isNotInTheViewport = el => {
         content: '';
         position: absolute;
         width: .25rem;
-        height: 80%;
-        top: 10%;
+        height: calc(100% - .3em);
+        top: 0;
         left: 0;
         background: var(--purple-200);
       }

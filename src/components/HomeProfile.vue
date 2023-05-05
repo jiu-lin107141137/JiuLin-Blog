@@ -76,13 +76,24 @@ const getArticlesCount = computed(() => loadding.value || !blogConfig ? 0 : blog
 
 const toTagQuery = async id => {
   queryStore.initTag(id);
-  // if(route.name != 'tagQuery')
-  router.push({
-    name: 'tagQuery',
-    state: {
-      tagId: id
-    }
-  });
+  if(route.name != 'tagQuery')
+    router.push({
+      name: 'tagQuery',
+      // state: {
+      //   tagId: id
+      // }
+    });
+}
+
+const toCategoryQuery = async id => {
+  queryStore.initCategory(id);
+  if(route.name != 'categoryQuery')
+    router.push({
+      name: 'categoryQuery',
+      // state: {
+      //   tagId: id
+      // }
+    });
 }
 
 </script>
@@ -117,7 +128,10 @@ const toTagQuery = async id => {
         </span>
       </div>
       <div class="statistics-body">
-        <div class="category" v-for="category in getCategories" :key="category.categoryName">
+        <div class="category" 
+            v-for="(category, index) in getCategories" 
+            :key="category.categoryName" 
+            @click.stop="toCategoryQuery(index)">
           <span>{{ category.categoryName }}</span>
           <span>{{ category.categoryCount }}</span>
         </div>
