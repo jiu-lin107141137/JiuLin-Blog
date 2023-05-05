@@ -81,7 +81,7 @@ async function particlesLoaded(container) {
               enable: true,
               area: 800
             },
-            value: 20
+            value: 10
           },
           opacity: {
             value: 0.5

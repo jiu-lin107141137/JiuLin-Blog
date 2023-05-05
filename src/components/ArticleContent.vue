@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router';
 import { useLangStore } from '../stores/lang';
 import { storeToRefs } from 'pinia';
 import { ref, watch, computed, onMounted, onUnmounted } from 'vue';
@@ -128,6 +128,11 @@ const getMdFile = async () => {
   
   if(anchors.length)
     await clickOnLink(anchors[0].id, true);
+  else
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
 }
 
 const updateCurrentAnchor = () => {
@@ -150,6 +155,11 @@ onUnmounted(() => {
   document.removeEventListener('scroll', scrollEvent);
 })
 
+onBeforeRouteLeave(() => {
+  document.removeEventListener('scroll', scrollEvent);
+  // document.removeEventListener('scroll', scrollEvent, true);
+})
+
 const clickOnLink = async (id, useCapture=false) => {
   document.removeEventListener('scroll', scrollEvent, useCapture);
   // console.log('removed');
@@ -161,7 +171,7 @@ const clickOnLink = async (id, useCapture=false) => {
   window.scrollTo({
     top: document.getElementById(id).getBoundingClientRect().top + window.scrollY - 80,
     behavior: 'smooth'
-  })
+  });
   previousActive = document.getElementById('to-'+id);
   previousActive.classList.add('current');
   // console.log(previousActive);
@@ -171,7 +181,9 @@ const clickOnLink = async (id, useCapture=false) => {
     if(timer2 !== null)
       clearTimeout(timer2);
     timer2 = setTimeout(() => {
-      document.addEventListener('scroll', scrollEvent);
+      // if(!document.scroll)
+      // console.log(document.onscroll);
+        document.addEventListener('scroll', scrollEvent);
     }, 1000);
   });
 }
@@ -236,7 +248,7 @@ const articleInfo = computed(() => {
     time: a.created_at,
     tags: a.tags.map(t => blogConfig.items.tags[t]).join(', '),
     category: blogConfig.items.categories[a.category],
-    categoryId: a.category
+    categoryId: a.category,
   }
 });
 
@@ -252,7 +264,7 @@ const articlesUnderSameCategory = computed(() => {
 });
 
 const toDatetimeFormat = dtStr => {
-  if (!dtStr) return null
+  if (!dtStr) return null;
   let dateParts = dtStr.split("/");
   let timeParts = dateParts[2].split(" ")[1].split(":");
   dateParts[2] = dateParts[2].split(" ")[0];

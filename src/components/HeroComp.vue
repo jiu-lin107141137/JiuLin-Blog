@@ -25,7 +25,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url('@/assets/image/skadiBackground.jpg');
   background-repeat: no-repeat;
   background-position: center;

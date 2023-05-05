@@ -109,7 +109,7 @@ const toCategoryQuery = async id => {
           {{ article.created_at }}
         </span>
       </div>
-      <div>
+      <div class="hover">
         <span class="material-symbols-outlined">
           topic
         </span>
@@ -200,6 +200,14 @@ const toCategoryQuery = async id => {
       span:first-child {
         font-size: .9rem;
       }
+    }
+
+    div.hover {
+      transition: color .25s ease-in-out 0s;
+    }
+
+    div.hover:hover {
+      color: var(--purple-700);
     }
     // span:nth-child(n+2) {
     //   margin-left: .5rem;

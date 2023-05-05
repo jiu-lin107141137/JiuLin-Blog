@@ -48,7 +48,7 @@ watch(lang, async ( newValue, oldValue ) => {
 });
 
 const toDatetimeFormat = dtStr => {
-  if (!dtStr) return null
+  if (!dtStr) return null;
   let dateParts = dtStr.split("/");
   let timeParts = dateParts[2].split(" ")[1].split(":");
   dateParts[2] = dateParts[2].split(" ")[0];
