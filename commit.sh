@@ -3,7 +3,7 @@
 set -e
 
 git add .
-git commit -m "update deveploment log"
+git commit -m "update current section detecting (article content page)"
 
 # 將 dist資料夾中的內容推送至遠端 hexWeek6Demo的 gh-pages分支中
 git push -f https://github.com/jiu-lin107141137/JiuLin-Blog.git

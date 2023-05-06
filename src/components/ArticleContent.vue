@@ -122,7 +122,7 @@ const getMdFile = async () => {
   for(let i = 0; i < headingCount.length && headingCount[i] == 0; i++)
     headingOffset.value ++;
   anchors = [...document.getElementsByClassName('markdown-anchor')];
-  previousActive = null;
+  // previousActive = null;
 
   loading.value = false;
   
@@ -132,7 +132,7 @@ const getMdFile = async () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
-    })
+    });
 }
 
 const updateCurrentAnchor = () => {
@@ -162,8 +162,8 @@ onBeforeRouteLeave(() => {
 
 const clickOnLink = async (id, useCapture=false) => {
   document.removeEventListener('scroll', scrollEvent, useCapture);
-  // console.log('removed');
   if(previousActive){
+    // console.log('remove'+previousActive.id);
     if(previousActive.id == 'to-'+id)
       return;
     previousActive.classList.remove('current');
@@ -174,7 +174,6 @@ const clickOnLink = async (id, useCapture=false) => {
   });
   previousActive = document.getElementById('to-'+id);
   previousActive.classList.add('current');
-  // console.log(previousActive);
   var urlHash = '#'+id;
   await router.replace(urlHash).then(() => {
     window.history.replaceState({ ...window.history.state, ...null}, '');
