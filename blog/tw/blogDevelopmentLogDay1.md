@@ -7,7 +7,7 @@ Vue開發團隊在2022年7月1日[公告](https://v2.vuejs.org/lts/)
 Vue 2 will reach End of Life (EOL) on December 31st, 2023. After that date, Vue 2 will continue to be available in all existing distribution channels (CDNs and package managers), but will no longer receive updates, including security and browser compatibility fixes.
 
 大意:
-> Vue2.7為Vue2.x版本最後一個小型更新，將不會新增任何新的功能，僅提供必要的錯誤與安全性更新，並且會在2023年12月31日號結束生命週期，在此之後將不再有任何的安全性與瀏覽器相容性之更新。
+> Vue2.7為Vue2.x版本最後一個小型版本號，將不會新增任何新的功能，僅提供必要的錯誤與安全性更新，並且會在2023年12月31日號結束生命週期，在此之後將不再有任何的安全性與瀏覽器相容性之更新。
 
 由於我前一個部落格是以Vue2為基礎進行開發的，所以會受到影響，正好我的網頁程式設計課程在期末時須製作一個期末報告，因此我決定重新製作一個新的個人部落
 <br>
