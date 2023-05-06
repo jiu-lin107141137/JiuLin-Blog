@@ -516,6 +516,10 @@ const toDatetimeFormat = dtStr => {
       background: var(--black-thin);
       padding: .5rem 1rem;
       line-height: 2rem;
+      :deep(*) {
+        // font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
 
       /*
       @media (max-width: 767px) {
@@ -544,6 +548,15 @@ const toDatetimeFormat = dtStr => {
         left: 0;
         background: var(--purple-200);
       }
+
+      :deep(h3::before) {
+        height: 100%;
+      }
+
+      :deep(blockquote) {
+        border-left-color: var(--gray-900);
+        color: var(--gray-500);
+      }
       
       :deep(pre:has(code.hljs)),
       :deep(tr) {
@@ -551,7 +564,15 @@ const toDatetimeFormat = dtStr => {
       }
 
       :deep(pre) {
-        max-height: 300px;
+        padding: 0;
+      }
+
+      :deep(pre) {
+        max-height: 350px;
+      }
+
+      :deep(code) {
+        font-family: 'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace;
       }
 
       :deep(tr):nth-child(2n) {
