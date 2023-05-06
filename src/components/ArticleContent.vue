@@ -283,7 +283,8 @@ const toDatetimeFormat = dtStr => {
           v-for="a in articlesUnderSameCategory"
           :key="a.url"
           :class="{'current': a.url === route.params.name}"
-          @click="router.push('/article/'+a.url)">
+          @click="router.push('/article/'+a.url)"
+          :title="a.title">
         {{ a.title }}
       </div>
     </div>
@@ -419,6 +420,9 @@ const toDatetimeFormat = dtStr => {
       padding: .5rem 0 .5rem 1rem;
       height: fit-content;
       color: var(--gray-100);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     .title {
