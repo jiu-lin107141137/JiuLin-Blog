@@ -18,7 +18,7 @@
         0, 1
       ],
       "category" : 0,
-      "url" : "blogDevelopmentLogDay1"
+      "url" : "blogDevLogsDay1"
     },
     {
       "title" : "部落格開發日誌 - 第二天",
@@ -28,7 +28,7 @@
         0, 1
       ],
       "category" : 0,
-      "url" : "blogDevelopmentLogDay2"
+      "url" : "blogDevLogsDay2"
     },
     {
       "title" : "部落格開發日誌 - 第三天",
@@ -38,7 +38,7 @@
         0, 1
       ],
       "category" : 0,
-      "url" : "blogDevelopmentLogDay3"
+      "url" : "blogDevLogsDay3"
     }
   ],
   "items" : {

@@ -401,6 +401,7 @@ const toDatetimeFormat = dtStr => {
 
   #category {
     // width: 15%;
+    // width: fit-content;
     min-width: 200px;
     height: calc(100vh - 4rem);
     height: calc(100svh - 4rem);
