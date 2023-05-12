@@ -566,8 +566,8 @@ const toDatetimeFormat = dtStr => {
         background-color: var(--gray-900);
       }
 
-      :deep(pre) {
-        padding: 0;
+      :deep(a) {
+        color: var(--blue-600);
       }
 
       :deep(pre) {
