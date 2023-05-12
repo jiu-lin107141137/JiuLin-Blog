@@ -257,7 +257,7 @@ const articlesUnderSameCategory = computed(() => {
   
   let aInfo = articleInfo.value;
   let rt = blogConfig.articles.filter(a => a.category === aInfo.categoryId)
-            .sort((a, b) => toDatetimeFormat(b.created_at).getTime() - toDatetimeFormat(a.created_at).getTime());
+            .sort((a, b) => toDatetimeFormat(a.created_at).getTime() - toDatetimeFormat(b.created_at).getTime());
 
   return rt;
 });
