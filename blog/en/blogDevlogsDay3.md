@@ -18,14 +18,14 @@ In this section, I will share things I learned today.
     If you ever view a SPA(single page application) deployed on gh-page, you may encounter 404 error when you try to refresh a page, but why?
 
 * #### Why does it happen
-    The issue is that gh-page doesn't ***natively*** support SPA, when the page reloads, the host will directly go to the path and fetch the corresponding .html file, but since SPA only has one entrance(usually the index.html), the host then response a 404 error because it couldn't find the .html file under the directory.
+    The issue is that gh-page doesn't ***natively*** support SPA. When the page reloads, the host will directly go to the path and fetch the corresponding .html file, but since SPA only has one entrance(usually the index.html), the host then response a 404 error because it couldn't find the .html file under the directory.
 
     When the host response a 404 error, it will also return the 404.html file if it's found under the root directory.
 
 
 * #### How to fix
     To fix the issue, we can add the 404.html, when the 404.html is returned, then we can redirect the page to the index.html.
-    Check this amazing solution to solve the problem.
+    Check this amazing solution and follow the instructions to solve the problem.
     https://github.com/rafgraph/spa-github-pages
 
 ### Translate .md file to html
@@ -38,7 +38,7 @@ There are various ways to translate .md file to html, here I'm using [**marked**
     npm install @types/marked # For TypeScript projects
     ```
 * #### usage
-    In components.js
+    In components.vue
     ```js
     import { marked } from 'marked';
 
