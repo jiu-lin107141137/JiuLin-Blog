@@ -163,6 +163,7 @@ const toCategoryQuery = async id => {
     font-weight: 500;
     white-space: nowrap;
     text-overflow: ellipsis;
+    overflow: hidden;
     transition: color .25s ease-in-out 0s;
     position: relative;
 
