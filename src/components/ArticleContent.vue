@@ -572,10 +572,17 @@ const toDatetimeFormat = dtStr => {
 
       :deep(pre) {
         max-height: 350px;
+        padding: .5rem;
       }
 
       :deep(code) {
         font-family: 'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+        font-size: .85rem;
+
+        * {
+          font-family: 'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+          font-size: .85rem;
+        }
       }
 
       :deep(tr):nth-child(2n) {

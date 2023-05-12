@@ -29,6 +29,16 @@
       ],
       "category" : 0,
       "url" : "blogDevelopmentLogDay2"
+    },
+    {
+      "title" : "Blog development log - Day 3",
+      "summary" : "continue developing my own blog - day 3",
+      "created_at" : "24/04/2023 21:42",
+      "tags" : [
+        0, 1
+      ],
+      "category" : 0,
+      "url" : "blogDevelopmentLogDay3"
     }
   ],
   "items" : {
