@@ -15,7 +15,7 @@ Here are what I had done today:
 In this section, I will share things I learned today.
 ### 404 error on freshing page with SPA deployed on gh-page
 * #### Issue
-    If you ever browse a SPA(single page application) deployed on gh-page, you may encounter 404 error when you try to refresh a page, but why?
+    If you ever browse a SPA(single page application) deployed on gh-page(or try to deploy one), you may encounter 404 error when you try to refresh a page, but why?
 
 * #### Why does it happen
     The issue is that gh-page doesn't ***natively*** support SPA. When the page reloads, the host will directly go to the path and fetch the corresponding .html file, but since SPA only has one entrance(usually the index.html), the host then response a 404 error because it couldn't find the .html file under the directory.
