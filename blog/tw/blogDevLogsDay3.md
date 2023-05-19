@@ -4,7 +4,7 @@
 ## 完成事項
 以下為今日所完成的內容:
 * 新增文章瀏覽頁面。
-* 測試透過HTTPRequest的方式讀取.md檔案
+* 測試透過HTTPRequest讀取.md檔案
 * 處理單頁應用程式(SPA)在部署至Github-page上後，重整造成404的問題。
 * 將從.md檔案中讀取到的markdown語法轉為html語法
 * 替由markdown轉換而成的html加入css

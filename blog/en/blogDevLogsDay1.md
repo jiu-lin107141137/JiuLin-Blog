@@ -10,7 +10,7 @@ My previous blog will be down since it is also based on Vue2; furthermore, I nee
 <br>
 
 ## Purpose
-I will develop a new blog with features like adding new articles, classifying articles with different tags and categories, searching articles with keywords and viewing in various languages, etc. Moreover, I can build my learning portfolio with this, and if I forget things I can recall them by looking up my blogs.
+I will develop a new blog with features like adding new articles, classifying articles with different tags and categories, searching articles with keywords and viewing in various languages, etc. Moreover, I can build my learning portfolio with this, and I can do the review by looking up my blogs.
 <br>
 
 ## Start up
