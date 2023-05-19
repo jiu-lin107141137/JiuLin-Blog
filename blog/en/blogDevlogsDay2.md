@@ -7,7 +7,7 @@ Here are what I had done today:
 * Use intersection observer API to watch home body and give fade-in effect.
 * Make navbar responsive
 * Add Particle.js as background animation and make it responsive
-* Redesign article preview section
+* Redesign the article preview section
 <br>
 
 ## New things I learned
