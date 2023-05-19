@@ -6,7 +6,7 @@ As Vue developer team [announced](https://v2.vuejs.org/lts/) on July 1, 2022.
 > Vue 2.7 is the current, and final minor release of Vue 2.x. Vue 2.7 receives 18 months of LTS (long-term support) starting from its release date on July 1st, 2022. During this period, Vue 2 will receive necessary bug and security fixes, but will no longer receive new features.
 Vue 2 will reach End of Life (EOL) on December 31st, 2023. After that date, Vue 2 will continue to be available in all existing distribution channels (CDNs and package managers), but will no longer receive updates, including security and browser compatibility fixes.
 
-My previous blog will be down since it is also based on Vue2; furthermore, I need to develop a term project for my Web Programming class, so I decided to remake a new blog.
+My previous blog will be affected since it was made based on Vue2; furthermore, I need to develop a term project for my Web Programming class, so I decided to remake a new blog.
 <br>
 
 ## Purpose
