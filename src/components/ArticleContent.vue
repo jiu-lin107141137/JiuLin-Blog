@@ -479,7 +479,8 @@ const toDatetimeFormat = dtStr => {
 
     div {
       // width: 100%;
-      color: var(--gray-300);
+      color: var(--gray-200);
+      // color: var(--white);
     }
 
     #article-title {
