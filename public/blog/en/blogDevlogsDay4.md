@@ -19,3 +19,5 @@ This function includes the following requirements:
 The issues encountered:
 * After performing click on TOC, the page scrolls to the section right away, but TOC color displayed is abnormal.
 * After switching the language, the page jumps to the first section, but TOC color displayed is abnormal.
+
+
